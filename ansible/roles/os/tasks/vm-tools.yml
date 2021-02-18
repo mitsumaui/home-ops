@@ -1,0 +1,23 @@
+---
+
+- name: Install VMware based tools
+  become: true
+  apt:
+    name: "open-vm-tools"
+    install_recommends: false
+    update_cache: true
+    cache_valid_time: 3600
+    autoclean: true
+    autoremove: true
+  when: ansible_system_vendor == "VMware, Inc."
+
+- name: Install VMware based tools
+  become: true
+  apt:
+    name: "qemu-guest-agent"
+    install_recommends: false
+    update_cache: true
+    cache_valid_time: 3600
+    autoclean: true
+    autoremove: true
+  when: ansible_system_vendor == "QEMU"
