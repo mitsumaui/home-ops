@@ -2,6 +2,7 @@
 
 - name: motd | disable
   lineinfile:
+    create: yes
     dest: /etc/default/motd-news
     state: present
     regexp: '^ENABLED='

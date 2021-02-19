@@ -7,3 +7,5 @@ kubeconfig
 .vscode
 .tasks
 ignore
+
+ansible/roles/xanmanning.k3s*

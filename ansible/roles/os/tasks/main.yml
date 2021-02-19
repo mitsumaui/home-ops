@@ -36,6 +36,10 @@
   tags:
   - unattended-upgrades
 
+- include: vm-tools.yml
+  tags:
+  - vm-tools
+
 - include: user.yml
   tags:
   - user
