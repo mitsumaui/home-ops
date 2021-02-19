@@ -10,8 +10,9 @@
     autoclean: true
     autoremove: true
   when: ansible_system_vendor == "VMware, Inc."
+  register: vmware
 
-- name: Install VMware based tools
+- name: Install QEMU based tools
   become: true
   apt:
     name: "qemu-guest-agent"
@@ -21,3 +22,12 @@
     autoclean: true
     autoremove: true
   when: ansible_system_vendor == "QEMU"
+
+- name: Remove VMware tools if not VMware guest
+  become: true
+  apt:
+    name: 
+      - open-vm-tools
+    state: absent
+    autoremove: true
+  when: ansible_system_vendor != "VMware, Inc."
