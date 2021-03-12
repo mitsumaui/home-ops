@@ -1,0 +1,8 @@
+---
+
+- name: Validate Disk exists
+  stat:
+    path: "{{ data_path }}"
+  register: data_path_exists
+
+# Create code here...

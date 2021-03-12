@@ -32,6 +32,10 @@
   tags:
   - filesystem
 
+- include: data-disks.yml
+  tags:
+  - data-disks
+
 - include: unattended-upgrades.yml
   tags:
   - unattended-upgrades

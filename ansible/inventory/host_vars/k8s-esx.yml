@@ -14,3 +14,5 @@ remote_user: "ubuntu"
 # for more k3s host variables, see
 # https://github.com/PyratLabs/ansible-role-k3s#host-variables
 k3s_node_ip_address: "{{ ansible_host }}"
+
+data_path: "/dev/sdb"
