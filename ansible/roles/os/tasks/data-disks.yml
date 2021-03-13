@@ -5,4 +5,43 @@
     path: "{{ data_path }}"
   register: data_path_exists
 
-# Create code here...
+- name: Create mountpoint
+  file:
+    state: directory
+    path: "/mnt/longhorn"
+  when: data_path_exists.stat.isblk
+
+- name: Create VG
+  lvg:
+    vg: "longhorn"
+    pvs: "{{ data_path }}"
+    state: present
+  
+- name: Conduct PV resize test
+  shell: "pvresize {{ data_path }} -v -t"
+  changed_when: false
+  register: lvm_pvresize_output
+
+- name: Resize PV
+  shell: "pvresize {{ data_path }}"
+  when: '"No change to size of physical volume" not in lvm_pvresize_output.stderr'
+
+- name: Create LV
+  lvol:
+    lv: "data"
+    vg: "longhorn"
+    size: "100%PVS"
+    state: present
+
+- name: Format disk
+  filesystem:
+    dev: "/dev/mapper/longhorn-data"
+    fstype: "xfs"
+    resizefs: yes
+
+- name: Mount disk
+  mount:
+    src: "/dev/mapper/longhorn-data"
+    name: "/mnt/longhorn"
+    fstype: "xfs"
+    state: mounted
