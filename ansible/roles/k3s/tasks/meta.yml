@@ -67,3 +67,17 @@
   - k3s_control_node is defined
   - k3s_control_node
   - (hostvars[item].k3s_system_upgrade is not defined or not hostvars[item].k3s_system_upgrade)
+
+- name: cluster | meta | longhorn set autoconfig
+  become: true
+  environment:
+    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+  command: kubectl label node {{ansible_hostname}} node.longhorn.io/create-default-disk="config"
+  when: data_path is defined
+
+- name: cluster | meta | longhorn add volume
+  become: true
+  environment:
+    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+  command: kubectl annotate node {{ansible_hostname}} node.longhorn.io/default-disks-config='[{"path":"/mnt/longhorn","allowScheduling":true}]'
+  when: data_path is defined
