@@ -41,11 +41,6 @@ packages:
   - unzip
   - vim
   - xfsprogs
-  - dmeventd 
-  - libdevmapper-event1.02.1 
-  - liblvm2app2.2 
-  - liblvm2cmd2.02 
-  - libreadline5
   remove:
   - apparmor
   - apport
