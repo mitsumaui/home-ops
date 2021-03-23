@@ -9,7 +9,7 @@
   file:
     state: directory
     path: "/mnt/longhorn"
-  when: data_path_exists.stat.isblk
+  when: data_path_exists.stat.exists
 
 - name: Create VG
   lvg:
