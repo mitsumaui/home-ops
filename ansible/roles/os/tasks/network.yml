@@ -10,6 +10,7 @@
   loop:
   - "iptables"
   - "ebtables"
+  failed_when: false
 
 # k3s still recommended use legacy iptables
 # https://rancher.com/docs/k3s/latest/en/known-issues/
@@ -22,6 +23,7 @@
   - "ip6tables"
   when:
   - disable_ipv6 is not defined or not disable_ipv6
+  failed_when: false
 
 - name: network | modules | unload ipv6
   become: true
