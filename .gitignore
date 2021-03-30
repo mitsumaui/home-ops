@@ -9,3 +9,6 @@ kubeconfig
 ignore
 
 ansible/roles/xanmanning.k3s*
+
+terraform/.terraform*
+terraform/terraform.tfstate*
