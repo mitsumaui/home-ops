@@ -83,3 +83,11 @@
   command: kubectl annotate node {{ansible_hostname}} node.longhorn.io/default-disks-config='[{"path":"/mnt/longhorn","allowScheduling":true}]'
   failed_when: false
   when: data_path is defined
+
+- name: cluster | meta | longhorn add volume - manual mount
+  become: true
+  environment:
+    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+  command: kubectl annotate node {{ansible_hostname}} node.longhorn.io/default-disks-config='[{"path":"{{mount_path}}","allowScheduling":true}]'
+  failed_when: false
+  when: mount_path is defined
