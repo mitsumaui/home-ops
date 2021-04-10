@@ -74,7 +74,7 @@
     KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
   command: kubectl label node {{ansible_hostname}} node.longhorn.io/create-default-disk="config"
   failed_when: false
-  when: data_path is defined
+  when: data_path is defined or mount_path is defined
 
 - name: cluster | meta | longhorn add volume
   become: true
