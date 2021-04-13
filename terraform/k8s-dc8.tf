@@ -5,7 +5,7 @@ module "k8s-dc8" {
   qemu_datastore = "Data"
 
   vm_name   = "k8s-dc8"
-  mem_gb    = 8
+  mem_gb    = 12
   num_cpu   = 4
   autostart = true
 
