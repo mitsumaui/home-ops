@@ -1,0 +1,13 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: esphome-restore
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: esphome-restic-secret
+    # Use an existing PVC, don't provision a new one
+    destinationPVC: esphome
+    copyMethod: Direct

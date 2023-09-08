@@ -6,7 +6,7 @@
 #   name: esphome
 #   namespace: home
 # spec:
-#   sourcePVC: esphome-pvc
+#   sourcePVC: esphome
 #   trigger:
 #     schedule: 0 2 * * *
 #   restic:
