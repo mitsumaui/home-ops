@@ -17,20 +17,18 @@ spec:
         namespace: flux-system
   maxHistory: 3
   install:
-    createNamespace: true
-    remediation:
-      retries: 3
+    createNamespace: false
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-    - name: volsync
-      namespace: volsync
+  # dependsOn:
+  #   - name: rook-ceph-cluster
+  #     namespace: rook-ceph
+  #   - name: volsync
+  #     namespace: volsync
   values:
     image:
       repository: esphome/esphome
