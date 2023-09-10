@@ -10,25 +10,22 @@ spec:
     spec:
       chart: app-template
       version: 1.5.1
-      interval: 30m
       sourceRef:
         kind: HelmRepository
-        name: bjw-s-charts
+        name: bjw-s
         namespace: flux-system
   maxHistory: 3
-  install:
-    createNamespace: false
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
   uninstall:
     keepHistory: false
-  # dependsOn:
-  #   - name: rook-ceph-cluster
-  #     namespace: rook-ceph
-  #   - name: volsync
-  #     namespace: volsync
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync
   values:
     image:
       repository: esphome/esphome
