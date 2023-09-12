@@ -1,0 +1,79 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: node-red
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync
+
+  values:
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+
+    image:
+      repository: docker.io/nodered/node-red
+      tag: 3.1.0@sha256:81bc011a753112fa0abbaeb4d6e8e3f80e102ec7ff0ee816dc411515b7804c17
+
+    service:
+      main:
+        ports:
+          http:
+            port: 1880
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        annotations:
+          hajimari.io/enable: true
+          hajimari.io/icon: cib:node-red
+        hosts:
+          - host: &host nodered.${SECRET_DOMAIN}
+            paths:
+              - path: /
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      data:
+        enabled: true
+        mountPath: /data
+        existingClaim: node-red
+
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+
+    resources:
+      requests:
+        cpu: 5m
+        memory: 512Mi
+      limits:
+        memory: 512Mi
