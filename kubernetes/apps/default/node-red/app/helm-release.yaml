@@ -49,8 +49,8 @@ spec:
         enabled: true
         ingressClassName: internal
         annotations:
-          hajimari.io/enable: true
-          hajimari.io/icon: cib:node-red
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "cib:node-red"
         hosts:
           - host: &host nodered.${SECRET_DOMAIN}
             paths:
