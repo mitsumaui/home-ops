@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-net-ups-tools
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/monitoring/network-upe-tools/app
+  path: ./kubernetes/apps/monitoring/network-ups-tools/app
   prune: true
   sourceRef:
     kind: GitRepository
