@@ -43,8 +43,8 @@ spec:
           http:
             port: 3493
             protocol: TCP
-        loadBalancerIP: ${NUT_LB}
-        externalTrafficPolicy: Local
+        annotations:
+          io.cilium/lb-ipam-ips: "192.168.167.105"
 
       metrics:
         enabled: true
