@@ -1,0 +1,67 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: actual
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync
+
+  values:
+    image:
+      repository: jlongster/actual-server
+      tag: 23.9.0-alpine@sha256:093ea723a922b5c2a8258c0655118193b6087cc086416f8636668f1177333cdb
+      pullPolicy: IfNotPresent
+
+    service:
+      main:
+        ports:
+          http:
+            port: 5006
+
+    env:
+      PORT: "5006"
+      TINI_SUBREAPER: 1
+      ACTUAL_NORDIGEN_SECRET_ID: "${ACTUAL_NG_ID}"
+      ACTUAL_NORDIGEN_SECRET_KEY: "${ACTUAL_NG_KEY}"
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: cash-multiple
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+        tls:
+            hosts:
+              - *host
+
+    persistence:
+      data:
+        enabled: true
+        existingClaim: actual
+        mountPath: /data

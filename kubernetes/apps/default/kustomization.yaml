@@ -7,3 +7,4 @@ resources:
   - ./discord-template-notifier/ks.yaml
   - ./esphome/ks.yaml
   - ./node-red/ks.yaml
+  - ./actual/ks.yaml
