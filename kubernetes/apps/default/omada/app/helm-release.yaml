@@ -149,8 +149,6 @@ spec:
     resources:
       requests:
         cpu: 1200m
-        memory: 2000Mi
-        intel.com/sriov_netdevice: 1
+        memory: 1200Mi
       limits:
-        memory: 3000Mi
-        intel.com/sriov_netdevice: 1
+        memory: 1500Mi
