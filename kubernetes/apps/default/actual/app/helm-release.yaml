@@ -53,13 +53,13 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: cash-multiple
         hosts:
-          - host: &host "actual.${SECRET_DOMAIN}"
+          - host: "actual.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
             hosts:
-              - *host
+              - "actual.${SECRET_DOMAIN}"
 
     persistence:
       data:
