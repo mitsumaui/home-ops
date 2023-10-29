@@ -146,9 +146,9 @@ spec:
         enabled: true
         mountPath: /opt/tplink/EAPController/logs
         existingClaim: omada-logs
-    resources:
-      requests:
-        # cpu: 1200m
-        # memory: 1200Mi
-      limits:
-        memory: 1500Mi
+    # resources:
+    #   requests:
+    #     cpu: 1200m
+    #     memory: 1200Mi
+    #   limits:
+    #     memory: 1500Mi
