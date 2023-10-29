@@ -1,0 +1,14 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: actual-restore
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: actual-restic-secret
+    # Use an existing PVC, don't provision a new one
+    destinationPVC: actual
+    copyMethod: Direct
+    storageClassName: ceph-block
