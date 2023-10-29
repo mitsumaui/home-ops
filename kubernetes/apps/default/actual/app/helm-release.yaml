@@ -26,24 +26,22 @@ spec:
       namespace: rook-ceph
     - name: volsync
       namespace: volsync
-
   values:
     image:
       repository: jlongster/actual-server
       tag: 23.9.0-alpine@sha256:093ea723a922b5c2a8258c0655118193b6087cc086416f8636668f1177333cdb
-      pullPolicy: IfNotPresent
-
-    service:
-      main:
-        ports:
-          http:
-            port: 5006
 
     env:
       PORT: "5006"
       TINI_SUBREAPER: 1
       ACTUAL_NORDIGEN_SECRET_ID: "${ACTUAL_NG_ID}"
       ACTUAL_NORDIGEN_SECRET_KEY: "${ACTUAL_NG_KEY}"
+
+    service:
+      main:
+        ports:
+          http:
+            port: 5006
 
     ingress:
       main:
@@ -53,13 +51,13 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: cash-multiple
         hosts:
-          - host: "actual.${SECRET_DOMAIN}"
+          - host: &host "actual.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
-            hosts:
-              - "actual.${SECRET_DOMAIN}"
+          - hosts:
+              - *host
 
     persistence:
       data:
