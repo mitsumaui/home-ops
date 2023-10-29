@@ -31,7 +31,9 @@ spec:
     recreatePods: true
     service:
       type: LoadBalancer
-      loadBalancerIP: ${SVC_EMQX_IP}
+      annotations:
+        io.cilium/lb-ipam-ips: ${SVC_EMQX_IP}
+      externalTrafficPolicy: Cluster
     affinity:
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
