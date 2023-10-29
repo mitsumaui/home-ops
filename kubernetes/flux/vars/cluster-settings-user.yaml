@@ -6,3 +6,4 @@ metadata:
   namespace: flux-system
 data:
   SVC_OMADA_CONTROLLER: "192.168.167.106"
+  SVC_EMQX_IP: "192.168.167.107"
