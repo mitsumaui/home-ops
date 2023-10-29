@@ -148,7 +148,7 @@ spec:
         existingClaim: omada-logs
     resources:
       requests:
-        cpu: 1200m
-        memory: 1200Mi
+        # cpu: 1200m
+        # memory: 1200Mi
       limits:
         memory: 1500Mi
