@@ -8,3 +8,4 @@ resources:
   - ./esphome/ks.yaml
   - ./node-red/ks.yaml
   - ./actual/ks.yaml
+  - ./omada/ks.yaml

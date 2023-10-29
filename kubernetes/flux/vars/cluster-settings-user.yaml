@@ -5,4 +5,4 @@ metadata:
   name: cluster-settings-user
   namespace: flux-system
 data:
-  SETTINGS_PLACEHOLDER: "settings-value"
+  SVC_OMADA_CONTROLLER: "192.168.167.106"
