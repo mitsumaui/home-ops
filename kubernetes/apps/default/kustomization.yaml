@@ -10,3 +10,4 @@ resources:
   - ./actual/ks.yaml
   - ./omada/ks.yaml
   - ./emqx/ks.yaml
+  - ./zigbee2mqtt/ks.yaml
