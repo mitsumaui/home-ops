@@ -11,3 +11,4 @@ resources:
   - ./omada/ks.yaml
   - ./emqx/ks.yaml
   - ./zigbee2mqtt/ks.yaml
+  - ./cloudnative-pg/ks.yaml
