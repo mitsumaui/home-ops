@@ -29,7 +29,7 @@ spec:
   values:
     image:
       repository: jlongster/actual-server
-      tag: 23.9.0-alpine@sha256:093ea723a922b5c2a8258c0655118193b6087cc086416f8636668f1177333cdb
+      tag: 23.10.0-alpine@sha256:adb8ec92c93c383872d2d9c32205da603dfa8109853dc0b9244d2403493797cc
 
     env:
       PORT: "5006"
