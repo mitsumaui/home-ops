@@ -4,5 +4,6 @@ kind: Kustomization
 namespace: default
 resources:
   - ./config-pvc.yaml
+  - ./secret.yaml
   - ./helm-release.yaml
   - ./volsync.yaml
