@@ -6,9 +6,6 @@ metadata:
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/default/cloudnative-pg/app
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   prune: true
   sourceRef:
     kind: GitRepository
@@ -25,8 +22,6 @@ metadata:
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/default/cloudnative-pg/cluster
-  dependsOn:
-    - name: cluster-apps-cnpg
   prune: true
   sourceRef:
     kind: GitRepository
