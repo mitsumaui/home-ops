@@ -53,7 +53,9 @@ spec:
               TZ: Europe/London
               POSTGRES_HOST: hass-psql-v16-rw.default.svc.cluster.local
               POSTGRES_DB: home_assistant
-            envFrom: *envFrom
+            envFrom:
+              - secretRef:
+                  name: home-assistant-secret
             probes:
               liveness:
                 enabled: false
