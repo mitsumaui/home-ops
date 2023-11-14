@@ -12,4 +12,4 @@ resources:
   - ./emqx/ks.yaml
   # - ./zigbee2mqtt/ks.yaml
   - ./cloudnative-pg/ks.yaml
-  - ./home-assistant/k
+  - ./home-assistant/ks.yaml
