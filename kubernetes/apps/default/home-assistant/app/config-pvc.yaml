@@ -9,7 +9,8 @@ metadata:
     app.kubernetes.io/instance: *name
     snapshot.home.arpa/enabled: "true"
 spec:
-  accessModes: ["ReadWriteOnce"]
+  accessModes:
+    - ReadWriteMany
   resources:
     requests:
       storage: 5Gi
