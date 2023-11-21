@@ -43,22 +43,22 @@ spec:
         secretAccessKey:
           name: cloudnative-pg
           key: S3_SECRET_KEY
-  # bootstrap:
-  #   recovery:
-  #     source: shared-psql-backup
-  # externalClusters:
-  #   - name: shared-psql-backup
-  #     barmanObjectStore:
-  #       wal:
-  #         compression: bzip2
-  #         maxParallel: 4
-  #       destinationPath: s3://postgresql/
-  #       endpointURL: http://minio.kube-system.svc:9000
-  #       serverName: shared-psql-v16
-  #       s3Credentials:
-  #         accessKeyId:
-  #           name: cloudnative-pg
-  #           key: S3_ACCESS_KEY
-  #         secretAccessKey:
-  #           name: cloudnative-pg
-  #           key: S3_SECRET_KEY
+  bootstrap:
+    recovery:
+      source: hass-psql-backup
+  externalClusters:
+    - name: hass-psql-backup
+      barmanObjectStore:
+        wal:
+          compression: bzip2
+          maxParallel: 4
+        destinationPath: s3://postgresql/
+        endpointURL: https://${SECRET_CNPG_S3_REPO}/hass-psql-v16
+        serverName: shared-psql-v16
+        s3Credentials:
+          accessKeyId:
+            name: cloudnative-pg
+            key: S3_ACCESS_KEY
+          secretAccessKey:
+            name: cloudnative-pg
+            key: S3_SECRET_KEY
