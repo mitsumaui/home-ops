@@ -54,7 +54,7 @@ spec:
           maxParallel: 4
         destinationPath: s3://postgresql/
         endpointURL: https://${SECRET_CNPG_S3_REPO}/hass-psql-v16
-        serverName: shared-psql-v16
+        serverName: hass-psql-v16
         s3Credentials:
           accessKeyId:
             name: cloudnative-pg
