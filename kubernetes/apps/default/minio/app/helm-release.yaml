@@ -96,9 +96,9 @@ spec:
 
 
     podSecurityContext:
-      runAsUser: 1032
-      runAsGroup: 100
-      fsGroup: 100
+      runAsUser: 1001
+      runAsGroup: 1001
+      fsGroup: 1001
       fsGroupChangePolicy: OnRootMismatch
 
     persistence:
