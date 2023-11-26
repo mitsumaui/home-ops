@@ -45,9 +45,9 @@ spec:
           key: S3_SECRET_KEY
   bootstrap:
     recovery:
-      source: postgres
+      source: hass-psql-v16
   externalClusters:
-    - name: postgres
+    - name: hass-psql-v16
       barmanObjectStore:
         wal:
           compression: bzip2
