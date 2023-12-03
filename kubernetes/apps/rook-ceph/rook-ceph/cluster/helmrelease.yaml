@@ -89,15 +89,15 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: "k8s-hop1"
+          - name: "k8s-nuc"
             devices:
-              - name: "/dev/vdb"
-          - name: "k8s-hop2"
+              - name: "/dev/nvme0n1p3"
+          - name: "k8s-hpe1"
             devices:
-              - name: "/dev/vdb"
-          - name: "k8s-hop3"
+              - name: "/dev/nvme0n1"
+          - name: "k8s-hpe2"
             devices:
-              - name: "/dev/vdb"
+              - name: "/dev/nvme0n1"
 
     ingress:
       dashboard:

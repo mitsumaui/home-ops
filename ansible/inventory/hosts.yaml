@@ -5,10 +5,10 @@ kubernetes:
       hosts:
         k8s-hop1:
           ansible_user: debian
-          ansible_host: 192.168.167.10
+          ansible_host: 192.168.167.201
         k8s-hop2:
           ansible_user: debian
-          ansible_host: 192.168.167.11
+          ansible_host: 192.168.167.202
         k8s-hop3:
           ansible_user: debian
-          ansible_host: 192.168.167.12
+          ansible_host: 192.168.167.203

@@ -5,5 +5,5 @@ metadata:
   name: cluster-settings-user
   namespace: flux-system
 data:
-  SVC_OMADA_CONTROLLER: "192.168.167.106"
-  SVC_EMQX_IP: "192.168.167.107"
+  SVC_OMADA_CONTROLLER: "192.168.167.213"
+  SVC_EMQX_IP: "192.168.167.214"
