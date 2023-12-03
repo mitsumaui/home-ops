@@ -3,12 +3,12 @@ kubernetes:
   children:
     master:
       hosts:
-        k8s-hop1:
+        k8s-nuc:
           ansible_user: debian
           ansible_host: 192.168.167.201
-        k8s-hop2:
+        k8s-hpe1:
           ansible_user: debian
           ansible_host: 192.168.167.202
-        k8s-hop3:
+        k8s-hpe2:
           ansible_user: debian
           ansible_host: 192.168.167.203
