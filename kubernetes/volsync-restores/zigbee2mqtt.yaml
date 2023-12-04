@@ -7,7 +7,7 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: zigbee2mqtt-restic-nas-secret
+    repository: zigbee2mqtt-restic-secret
     # Use an existing PVC, don't provision a new one
     destinationPVC: zigbee2mqtt
     copyMethod: Direct
