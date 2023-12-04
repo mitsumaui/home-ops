@@ -11,6 +11,6 @@ resources:
   - ./omada/ks.yaml
   - ./emqx/ks.yaml
   - ./zigbee2mqtt/ks.yaml
-  # - ./cloudnative-pg/ks.yaml
+  - ./cloudnative-pg/ks.yaml
   # - ./home-assistant/ks.yaml
   - ./minio/ks.yaml
