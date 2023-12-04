@@ -169,6 +169,6 @@ spec:
             - *host
     persistence:
       enabled: true
-      storageClassName: local-path
+      existingClaim: grafana
     testFramework:
       enabled: false
