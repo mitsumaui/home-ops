@@ -9,4 +9,4 @@ spec:
   immediate: true
   backupOwnerReference: self
   cluster:
-    name: hass-psql-v16
+    name: hass-psql-v16-1
