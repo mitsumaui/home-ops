@@ -2,14 +2,14 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: esphome-restore
+  name: zigbee2mqtt-restore
 spec:
   trigger:
     manual: restore-once
   restic:
     repository: zigbee2mqtt-restic-nas-secret
     # Use an existing PVC, don't provision a new one
-    destinationPVC: esphome
+    destinationPVC: zigbee2mqtt
     copyMethod: Direct
     storageClassName: ceph-block
     moverSecurityContext:
