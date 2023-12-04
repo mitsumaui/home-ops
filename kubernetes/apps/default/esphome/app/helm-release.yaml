@@ -59,7 +59,7 @@ spec:
         ingressClassName: internal
         annotations:
           hajimari.io/enable: "true"
-          hajimari.io/icon: "car-esp"
+          hajimari.io/icon: simple-icons:esphome
         hosts:
           - host: &host "esphome.${SECRET_DOMAIN}"
             paths:
