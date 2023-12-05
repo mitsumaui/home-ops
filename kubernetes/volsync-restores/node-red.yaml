@@ -7,7 +7,7 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: node-red-restic-secret
+    repository: node-red-restic-nas-secret
     # Use an existing PVC, don't provision a new one
     destinationPVC: node-red
     copyMethod: Direct

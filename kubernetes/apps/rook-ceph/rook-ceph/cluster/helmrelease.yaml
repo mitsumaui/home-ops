@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: rook-ceph-cluster
-      version: v1.11.8
+      version: v1.12.8
       sourceRef:
         kind: HelmRepository
         name: rook-ceph
@@ -81,6 +81,7 @@ spec:
       dashboard:
         enabled: true
         urlPrefix: /
+        ssl: false
 
       storage:
         useAllNodes: false
@@ -88,21 +89,19 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: "k8s-hop1"
+          - name: "k8s-nuc"
             devices:
-              - name: "/dev/vdb"
-          - name: "k8s-hop2"
+              - name: "/dev/nvme0n1p3"
+          - name: "k8s-hpe1"
             devices:
-              - name: "/dev/vdb"
-          - name: "k8s-hop3"
+              - name: "/dev/nvme0n1"
+          - name: "k8s-hpe2"
             devices:
-              - name: "/dev/vdb"
+              - name: "/dev/nvme0n1"
 
     ingress:
-      ingressClassName: internal
       dashboard:
-        annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        ingressClassName: internal
         host:
           name: &host "rook.${SECRET_DOMAIN}"
           path: "/"

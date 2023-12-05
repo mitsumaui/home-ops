@@ -7,7 +7,7 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: esphome-restic-secret
+    repository: esphome-restic-nas-secret
     # Use an existing PVC, don't provision a new one
     destinationPVC: esphome
     copyMethod: Direct

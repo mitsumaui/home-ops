@@ -5,11 +5,12 @@ resources:
   - ./namespace.yaml
   - ./hajimari/ks.yaml
   - ./discord-template-notifier/ks.yaml
-  # - ./esphome/ks.yaml
-  # - ./node-red/ks.yaml
+  - ./esphome/ks.yaml
+  - ./node-red/ks.yaml
   # - ./actual/ks.yaml
-  # - ./omada/ks.yaml
+  - ./omada/ks.yaml
   - ./emqx/ks.yaml
-  # - ./zigbee2mqtt/ks.yaml
+  - ./zigbee2mqtt/ks.yaml
   - ./cloudnative-pg/ks.yaml
   - ./home-assistant/ks.yaml
+  - ./minio/ks.yaml

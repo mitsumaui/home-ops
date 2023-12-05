@@ -28,8 +28,8 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: volsync
-      namespace: volsync
+    # - name: volsync
+    #   namespace: volsync
   values:
     controllers:
       main:
@@ -48,10 +48,10 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/home-assistant
-              tag: 2023.11.1@sha256:09b873d844058f55a7e44b61b6dab10d922309e755b5537037186b8058532be7
+              tag: 2023.11.3@sha256:a24bb33c22c67e1e89a0cace283af24315ccbedd859199b2048f2fc97bbd1139
             env:
               TZ: Europe/London
-              POSTGRES_HOST: hass-psql-v16-rw.default.svc.cluster.local
+              POSTGRES_HOST: hass-psql-v16-1-rw.default.svc.cluster.local
               POSTGRES_DB: home_assistant
             envFrom:
               - secretRef:
@@ -83,7 +83,10 @@ spec:
     ingress:
       main:
         enabled: true
-        className: internal
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          hajimari.io/icon: mdi:home-assistant
         hosts:
           - host: &host "hass.${SECRET_DOMAIN}"
             paths:

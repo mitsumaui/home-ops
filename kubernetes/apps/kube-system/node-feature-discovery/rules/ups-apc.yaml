@@ -6,13 +6,11 @@ metadata:
   name: ups-apc-device
 spec:
   rules:
-    - # Google Coral USB Accelerator
-      name: ups.apc
+    - name: ups.apc
       labels:
         ups.feature.node.kubernetes.io/apc: "true"
       matchFeatures:
         - feature: usb.device
           matchExpressions:
-            class: { op: In, value: ["02"] }
-            vendor: { op: In, value: ["1a86"] }
-            device: { op: In, value: ["7523"] }
+            vendor: { op: In, value: ["051d"] }
+            device: { op: In, value: ["0002"] }

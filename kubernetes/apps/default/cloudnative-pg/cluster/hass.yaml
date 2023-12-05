@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: hass-psql-v16
+  name: hass-psql-v16-1
   namespace: default
 spec:
   # using only 1 replica: very difficult to drain the node where postgres is running
@@ -33,9 +33,9 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 4
-      destinationPath: s3://postgresql/
-      endpointURL: https://${SECRET_CNPG_S3_REPO}/hass-psql-v16
-      serverName: hass-psql-v16
+      destinationPath: s3://cloudnative-pg/
+      endpointURL: https://${SECRET_NAS_MINIO_REPO}
+      serverName: hass-psql-v16-1
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg
@@ -45,16 +45,16 @@ spec:
           key: S3_SECRET_KEY
   # bootstrap:
   #   recovery:
-  #     source: shared-psql-backup
+  #     source: hass-psql-v16
   # externalClusters:
-  #   - name: shared-psql-backup
+  #   - name: hass-psql-v16
   #     barmanObjectStore:
   #       wal:
   #         compression: bzip2
   #         maxParallel: 4
-  #       destinationPath: s3://postgresql/
-  #       endpointURL: http://minio.kube-system.svc:9000
-  #       serverName: shared-psql-v16
+  #       destinationPath: s3://cloudnative-pg/
+  #       endpointURL: https://${SECRET_NAS_MINIO_REPO}
+  #       serverName: hass-psql-v16
   #       s3Credentials:
   #         accessKeyId:
   #           name: cloudnative-pg
