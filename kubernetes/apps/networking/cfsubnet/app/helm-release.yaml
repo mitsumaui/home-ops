@@ -5,18 +5,17 @@ metadata:
   name: cfsubnet
   namespace: networking
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
       version: 1.5.1
       sourceRef:
         kind: HelmRepository
-        name: bjw-s-charts
+        name: bjw-s
         namespace: flux-system
   maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -37,11 +36,12 @@ spec:
     env:
       NO_AUTOUPDATE: "true"
       TUNNEL_METRICS: 0.0.0.0:8080
-      TUNNEL_TRANSPORT_PROTOCOL: auto
+      TUNNEL_TRANSPORT_PROTOCOL: quic
+      TUNNEL_POST_QUANTUM: true
       TUNNEL_TOKEN:
         valueFrom:
           secretKeyRef:
-            name: cfsubnet-secret
+            name: cloudflared-secret
             key: TOKEN
     args:
       - tunnel
@@ -55,7 +55,7 @@ spec:
             port: 8080
     serviceMonitor:
       main:
-        enabled: false
+        enabled: true
         endpoints:
           - port: http
             scheme: http
