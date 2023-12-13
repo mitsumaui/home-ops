@@ -30,7 +30,7 @@ spec:
     pruneIntervalDays: 7
     repository: home-assistant-restic-secret
     cacheCapacity: 8Gi
-    cacheStorageClassName: local-path
+    cacheStorageClassName: csi-ceph-filesystem
     volumeSnapshotClassName: csi-ceph-filesystem
     storageClassName: ceph-filesystem
     moverSecurityContext:
@@ -72,7 +72,7 @@ spec:
     pruneIntervalDays: 7
     repository: home-assistant-restic-nas-secret
     cacheCapacity: 8Gi
-    cacheStorageClassName: local-path
+    cacheStorageClassName: csi-ceph-filesystem
     volumeSnapshotClassName: csi-ceph-filesystem
     storageClassName: ceph-filesystem
     moverSecurityContext:
