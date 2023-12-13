@@ -63,7 +63,7 @@ spec:
         annotations:
           hajimari.io/icon: simple-icons:adminer
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "pgadmin.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
