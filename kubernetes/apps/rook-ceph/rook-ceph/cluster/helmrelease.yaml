@@ -110,7 +110,10 @@ spec:
               - *host
 
     cephBlockPoolsVolumeSnapshotClass:
-      enabled: false
+      enabled: true
+      name: csi-ceph-blockpool
+      isDefault: false
+      deletionPolicy: Delete
 
     cephBlockPools:
       - name: ceph-blockpool
@@ -134,6 +137,12 @@ spec:
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
+
+    cephFileSystemVolumeSnapshotClass:
+      enabled: true
+      name: csi-ceph-filesystem
+      isDefault: false
+      deletionPolicy: Delete
 
     cephFileSystems:
       - name: ceph-filesystem
