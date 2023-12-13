@@ -65,15 +65,15 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: pgadmin-config
+        existingClaim: pgadmin
         globalMounts:
           - path: /var/lib/pgadmin
-      # server-json:
-      #   enabled: true
-      #   type: configMap
-      #   name: servers-json
-      #   subPath: servers.json
-      #   globalMounts:
-      #     - path: /pgadmin4/servers.json
+      server-json:
+        enabled: true
+        type: configMap
+        name: servers-json
+        subPath: servers.json
+        globalMounts:
+          - path: /pgadmin4/servers.json
     podAnnotations:
       secret.reloader.stakater.com/reload: *app
