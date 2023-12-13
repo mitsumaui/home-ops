@@ -80,12 +80,12 @@ spec:
         globalMounts:
           - path: /var/lib/pgadmin
         accessMode: ReadWriteOnce
-      server-json:
-        type: configMap
-        name: pgadmin-configmap
-        globalMounts:
-          - path: /pgadmin4/servers.json
-            subPath: servers.json
+      # server-json:
+      #   type: configMap
+      #   name: pgadmin-configmap
+      #   globalMounts:
+      #     - path: /pgadmin4/servers.json
+      #       subPath: servers.json
 
 
 
