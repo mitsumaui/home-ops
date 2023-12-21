@@ -43,12 +43,12 @@ spec:
               tag: 1.32.8.7639-fb6452ebf@sha256:637fe10cef736f249d96cb004c12f81646c81ca17ddce22374ea8782aa6646c2
             resources:
               requests:
-                cpu: 100m
+                # cpu: 100m
                 gpu.intel.com/i915: 1
-                memory: 9248M
+                # memory: 9248M
               limits:
                 gpu.intel.com/i915: 1
-                memory: 9248M
+                # memory: 9248M
 
     service:
       main:
