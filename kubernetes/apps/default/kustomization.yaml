@@ -16,3 +16,4 @@ resources:
   - ./minio/ks.yaml
   - ./pgadmin/ks.yaml
   - ./plex/ks.yaml
+  - ./tautulli/ks.yaml
