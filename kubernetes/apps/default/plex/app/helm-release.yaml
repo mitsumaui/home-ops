@@ -1,75 +1,28 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: plex
 spec:
-  interval: 30m
   chart:
     spec:
       chart: app-template
       version: 2.4.0
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
-  dependsOn:
-    - name: intel-device-plugin-gpu
-      namespace: kube-system
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-    - name: volsync
-      namespace: volsync
+  interval: 30m
   values:
     controllers:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
-        containers:
-          main:
-            image:
-              repository: ghcr.io/onedr0p/plex
-              tag: 1.32.8.7639-fb6452ebf
-            env:
-              TZ: Europe/London
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /identity
-                    port: 32400
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: false
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                gpu.intel.com/i915: 1
-                cpu: 200m
-                memory: 2Gi
-              limits:
-                gpu.intel.com/i915: 1
-                memory: 12Gi
+
+        pod:
+          enableServiceLinks: false
           nodeSelector:
             intel.feature.node.kubernetes.io/gpu: "true"
           securityContext:
@@ -77,23 +30,43 @@ spec:
             runAsGroup: 568
             runAsNonRoot: true
             fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
-            supplementalGroups: [44, 109, 1001]
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 44
+              - 109
+              - 1001
+
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/plex
+              tag: 1.32.8.7639-fb6452ebf@sha256:637fe10cef736f249d96cb004c12f81646c81ca17ddce22374ea8782aa6646c2
+            resources:
+              requests:
+                cpu: 100m
+                gpu.intel.com/i915: 1
+                memory: 9248M
+              limits:
+                gpu.intel.com/i915: 1
+                memory: 9248M
+
     service:
       main:
         type: LoadBalancer
+        externalTrafficPolicy: Cluster
         annotations:
-          io.cilium/lb-ipam-ips: 192.168.42.210
+          io.cilium/lb-ipam-ips: 192.168.167.215
         ports:
           http:
             port: 32400
+
     ingress:
       main:
         enabled: true
-        className: internal
         annotations:
-          # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        className: internal
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
@@ -104,31 +77,48 @@ spec:
         tls:
           - hosts:
               - *host
+
     persistence:
       config:
         enabled: true
         existingClaim: plex
-      tmp:
-        type: emptyDir
+        advancedMounts:
+          main:
+            main:
+              - path: /config
       transcode:
         type: emptyDir
-      media-movies:
-        enabled: true
-        existingClaim: nfs-plex-movies-pvc
-        mountPath: /media-movies
-        readOnly: true
-      media-cfmovies:
-        enabled: true
-        existingClaim: nfs-plex-cfmovies-pvc
-        mountPath: /media-cfmovies
-        readOnly: true
-      media-cftvshows:
-        enabled: true
-        existingClaim: nfs-plex-cftvshows-pvc
-        mountPath: /media-cftvshows
-        readOnly: true
-      media-tvshows:
-        enabled: true
-        existingClaim: nfs-plex-tvshows-pvc
-        mountPath: /media-tvshows
-        readOnly: true
+      tmp:
+        type: emptyDir
+      nfs-movies:
+        type: nfs
+        server: "${NAS_SERVER}"
+        path: "/mnt/Vol1/Movies"
+        advancedMounts:
+          main:
+            main:
+              - path: /media-movies
+      nfs-cfmovies:
+        type: nfs
+        server: "${NAS_SERVER}"
+        path: "/mnt/Vol1/CFMovies"
+        advancedMounts:
+          main:
+            main:
+              - path: /media-cfmovies
+      nfs-cftvshows:
+        type: nfs
+        server: "${NAS_SERVER}"
+        path: "/mnt/SG6TB/CFTVShows"
+        advancedMounts:
+          main:
+            main:
+              - path: /media-cftvshows
+      nfs-tvshows:
+        type: nfs
+        server: "${NAS_SERVER}"
+        path: "/mnt/SG6TB/TVShows"
+        advancedMounts:
+          main:
+            main:
+              - path: /media-tvshows
