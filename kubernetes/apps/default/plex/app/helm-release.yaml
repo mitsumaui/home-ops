@@ -55,7 +55,7 @@ spec:
         type: LoadBalancer
         externalTrafficPolicy: Cluster
         annotations:
-          io.cilium/lb-ipam-ips: 192.168.167.215
+          io.cilium/lb-ipam-ips: ${SVC_PLEX_IP}
         ports:
           http:
             port: 32400
