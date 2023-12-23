@@ -53,6 +53,7 @@ spec:
               TZ: Europe/London
               POSTGRES_HOST: hass-psql-v16-1-rw.default.svc.cluster.local
               POSTGRES_DB: home_assistant
+            hostNetwork: true
             envFrom:
               - secretRef:
                   name: home-assistant-secret
@@ -80,6 +81,10 @@ spec:
         ports:
           http:
             port: 8123
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: "${SVC_HASS_IP}"
+        externalTrafficPolicy: Cluster
     ingress:
       main:
         enabled: true
