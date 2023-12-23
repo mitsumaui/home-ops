@@ -7,11 +7,12 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: hass-restic-nas-secret
+    repository: home-assistant-restic-nas-secret
     # Use an existing PVC, don't provision a new one
     destinationPVC: home-assistant-config
     copyMethod: Direct
     storageClassName: ceph-filesystem
+    restoreAsOf: "2023-12-22T23:59:59-00:00"
     moverSecurityContext:
       runAsUser: 568
       runAsGroup: 568

@@ -2,20 +2,20 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: zigbee2mqtt-restore
+  name: tautulli-restore
 spec:
   trigger:
     manual: restore-once
   restic:
-    repository: zigbee2mqtt-volsync-secret-minio
+    repository: tautulli-volsync-secret-minio
     # Use an existing PVC, don't provision a new one
-    destinationPVC: zigbee2mqtt
+    destinationPVC: tautulli
     copyMethod: Direct
     storageClassName: ceph-block
     restoreAsOf: "2023-12-22T23:59:59-00:00"
     moverSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 0
+      runAsUser: 1999
+      runAsGroup: 1999
+      fsGroup: 1999
       fsGroupChangePolicy: "OnRootMismatch"
 

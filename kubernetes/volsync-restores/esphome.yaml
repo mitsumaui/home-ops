@@ -7,11 +7,12 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: esphome-restic-nas-secret
+    repository: esphome-volsync-secret-minio
     # Use an existing PVC, don't provision a new one
     destinationPVC: esphome
     copyMethod: Direct
     storageClassName: ceph-block
+    restoreAsOf: "2023-12-22T23:59:59-00:00"
     moverSecurityContext:
       runAsUser: 0
       runAsGroup: 0

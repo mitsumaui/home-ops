@@ -7,11 +7,12 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: node-red-restic-nas-secret
+    repository: node-red-volsync-secret-minio
     # Use an existing PVC, don't provision a new one
     destinationPVC: node-red
     copyMethod: Direct
     storageClassName: ceph-block
+    restoreAsOf: "2023-12-21T23:59:59-00:00"
     moverSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
