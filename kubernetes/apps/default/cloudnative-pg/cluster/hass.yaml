@@ -34,7 +34,7 @@ spec:
         compression: bzip2
         maxParallel: 4
       destinationPath: s3://cloudnative-pg/
-      endpointURL: &s3_url http://minio.default.svc.cluster.local:9000/cloudnative-pg
+      endpointURL: &s3_url http://minio.default.svc.cluster.local:9000/
       serverName: *currentCluster
       s3Credentials:
         accessKeyId:
