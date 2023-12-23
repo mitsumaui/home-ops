@@ -5,6 +5,10 @@ metadata:
   name: cluster-apps-esphome
   namespace: flux-system
 spec:
+  targetNamespace: default
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app esphome
   path: ./kubernetes/apps/default/esphome/app
   prune: true
   sourceRef:
@@ -14,3 +18,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 10Gi

@@ -3,13 +3,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app tautulli
+  name: cluster-apps-tautulli
   namespace: flux-system
 spec:
   targetNamespace: default
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: &app tautulli
   path: ./kubernetes/apps/default/tautulli/app
   prune: true
   sourceRef:
