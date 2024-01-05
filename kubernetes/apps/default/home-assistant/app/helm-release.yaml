@@ -53,7 +53,6 @@ spec:
               TZ: Europe/London
               POSTGRES_HOST: hass-psql-v16-1-rw.default.svc.cluster.local
               POSTGRES_DB: home_assistant
-            hostNetwork: true
             envFrom:
               - secretRef:
                   name: home-assistant-secret
@@ -71,6 +70,7 @@ spec:
               limits:
                 memory: 1Gi
         pod:
+          hostNetwork: true
           securityContext:
             runAsUser: 568
             runAsGroup: 568
