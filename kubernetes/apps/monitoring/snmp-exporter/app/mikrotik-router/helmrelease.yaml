@@ -40,9 +40,9 @@ spec:
       enabled: true
       namespace: *namespace
       params:
-        - name: mt-router-0
+        - name: router
           module: ["mikrotik"]
-          target: mt-router-0
+          target: router
       path: /snmp
       scrapeTimeout: 10s
       relabelings:
