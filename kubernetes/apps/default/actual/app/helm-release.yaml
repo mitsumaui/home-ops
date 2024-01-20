@@ -2,65 +2,98 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: actual
-  namespace: default
+  name: &app actual
 spec:
-  interval: 15m
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.4.0
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-    - name: volsync
-      namespace: volsync
+  interval: 15m
   values:
-    image:
-      repository: jlongster/actual-server
-      tag: 23.10.0-alpine@sha256:adb8ec92c93c383872d2d9c32205da603dfa8109853dc0b9244d2403493797cc
+    controllers:
+      main:
+        enabled: true
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        replicas: 1
 
-    env:
-      PORT: "5006"
-      TINI_SUBREAPER: 1
-      ACTUAL_NORDIGEN_SECRET_ID: "${ACTUAL_NG_ID}"
-      ACTUAL_NORDIGEN_SECRET_KEY: "${ACTUAL_NG_KEY}"
+        pod:
+          enableServiceLinks: false
+          securityContext:
+            runAsUser: &context 1999
+            runAsGroup: *context
+            fsGroup: *context
+            fsGroupChangePolicy: "OnRootMismatch"
 
+        containers:
+          main:
+            image:
+              repository: jlongster/actual-server
+              tag: 23.10.0-alpine@sha256:adb8ec92c93c383872d2d9c32205da603dfa8109853dc0b9244d2403493797cc
+            env:
+              TZ: "Europe/London"
+              PORT: &port 5006
+              TINI_SUBREAPER: 1
+              ACTUAL_NORDIGEN_SECRET_ID: "${ACTUAL_NG_ID}"
+              ACTUAL_NORDIGEN_SECRET_KEY: "${ACTUAL_NG_KEY}"
+
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /status
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: actual
+        advancedMounts:
+          main:
+            main:
+              - path: /data
     service:
       main:
         ports:
           http:
-            port: 5006
+            port: *port
 
     ingress:
       main:
         enabled: true
-        ingressClassName: internal
+        className: internal
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: cash-multiple
         hosts:
-          - host: &host "actual.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-
-    persistence:
-      data:
-        enabled: true
-        existingClaim: actual
-        mountPath: /data
