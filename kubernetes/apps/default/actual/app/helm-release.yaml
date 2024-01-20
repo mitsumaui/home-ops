@@ -34,8 +34,8 @@ spec:
         containers:
           main:
             image:
-              repository: jlongster/actual-server
-              tag: 23.10.0-alpine@sha256:adb8ec92c93c383872d2d9c32205da603dfa8109853dc0b9244d2403493797cc
+              repository: ghcr.io/actualbudget/actual-server
+              tag: 24.1.0
             env:
               TZ: "Europe/London"
               PORT: &port 5006
