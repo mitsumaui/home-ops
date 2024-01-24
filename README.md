@@ -148,6 +148,8 @@ Once you have installed Debian on your nodes, there are 6 stages to getting a Fl
     ```sh
     # Brew
     brew install go-task
+    # or, Arch
+    pacman -S --noconfirm go-task && ln -sf /usr/bin/go-task /usr/local/bin/task
     ```
 
 2. Install the most recent version of [direnv](https://direnv.net/)
@@ -159,6 +161,8 @@ Once you have installed Debian on your nodes, there are 6 stages to getting a Fl
     ```sh
     # Brew
     brew install direnv
+    # or, Arch
+    pacman -S --noconfirm direnv
     ```
 
 3. Setup a Python virual env and install Ansible by running the following task command.
@@ -166,8 +170,10 @@ Once you have installed Debian on your nodes, there are 6 stages to getting a Fl
     📍 _This commands requires Python 3.8+ to be installed_
 
     ```sh
-    # Platform agnostic
-    task deps
+    # Homebrew
+    task workstation:brew
+    # or, Arch with yay/paru
+    go-task workstation:arch
     ```
 
 4. Install the required tools: [age](https://github.com/FiloSottile/age), [flux](https://toolkit.fluxcd.io/), [cloudflared](https://github.com/cloudflare/cloudflared), [kubectl](https://kubernetes.io/docs/tasks/tools/), [sops](https://github.com/getsops/sops)
