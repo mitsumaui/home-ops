@@ -90,6 +90,21 @@ spec:
             jsonData:
               prometheusType: Prometheus
             isDefault: true
+          - name: Home-Assistant
+            type: postgres
+            access: proxy
+            url: psql-v16-ro.default.svc.cluster.local
+            database: hass
+            user: hass
+            secureJsonData:
+              password: "${SECRET_CNPG_HASS_APP_PASS}"
+            basicAuth: false
+            withCredentials: false
+            jsonData:
+              postgresVersion: 1000
+              sslmode: disable
+            version: 1
+            editable: true
     dashboards:
       default:
         cloudflared:
