@@ -45,7 +45,7 @@ spec:
           key: S3_SECRET_KEY
   bootstrap:
     recovery:
-      source: &previousCluster psql-v16
+      source: &previousCluster hass-psql-v16-1
   externalClusters:
     - name: *previousCluster
       barmanObjectStore:
