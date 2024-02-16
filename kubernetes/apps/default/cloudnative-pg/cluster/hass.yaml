@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: &currentCluster psql-v16
+  name: &currentCluster psql-v16-2
   namespace: default
 spec:
   # using only 1 replica: very difficult to drain the node where postgres is running
@@ -45,7 +45,7 @@ spec:
           key: S3_SECRET_KEY
   bootstrap:
     recovery:
-      source: &previousCluster hass-psql-v16-1
+      source: &previousCluster psql-v16
   externalClusters:
     - name: *previousCluster
       barmanObjectStore:
@@ -54,7 +54,7 @@ spec:
           maxParallel: 4
         destinationPath: s3://cloudnative-pg/
         endpointURL: *s3_url
-        serverName: hass-psql-v16-1
+        serverName: *previousCluster
         s3Credentials:
           accessKeyId:
             name: cloudnative-pg
