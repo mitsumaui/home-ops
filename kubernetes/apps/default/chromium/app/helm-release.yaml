@@ -26,8 +26,8 @@ spec:
         pod:
           enableServiceLinks: false
           securityContext:
-            runAsUser: &context 1000
-            runAsGroup: *context
+            runAsUser: &context 911
+            runAsGroup: 1000
             fsGroup: *context
             fsGroupChangePolicy: "OnRootMismatch"
 
@@ -39,17 +39,16 @@ spec:
             env:
               TZ: "Europe/London"
               TITLE: "Chromium"
-              PUID: 1000
-              PGID: 1000
 
             securityContext:
-              runAsNonRoot: false
               allowPrivilegeEscalation: true
-              privileged: true
-              # seccompProfile:
-              #   type: unconfined
-              # capabilities:
-              #   drop: ["ALL"]
+              capabilities:
+                drop:
+                  - ALL
+              seccompProfile:
+                type: unconfined
+              capabilities:
+                drop: ["ALL"]
 
             resources:
               limits:
