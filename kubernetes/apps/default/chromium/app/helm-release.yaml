@@ -40,14 +40,14 @@ spec:
               TZ: "Europe/London"
               TITLE: "Chromium"
 
-          securityContext:
-            runAsNonRoot: false
-            allowPrivilegeEscalation: true
-            privileged: true
-            # seccompProfile:
-            #   type: RuntimeDefault
-            # capabilities:
-            #   drop: ["ALL"]
+            securityContext:
+              runAsNonRoot: false
+              allowPrivilegeEscalation: true
+              privileged: true
+              # seccompProfile:
+              #   type: RuntimeDefault
+              # capabilities:
+              #   drop: ["ALL"]
 
             resources:
               limits:
