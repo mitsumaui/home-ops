@@ -39,15 +39,17 @@ spec:
             env:
               TZ: "Europe/London"
               TITLE: "Chromium"
+              PUID: 1000
+              PGID: 1000
 
             securityContext:
               runAsNonRoot: false
               allowPrivilegeEscalation: true
               privileged: true
-              # seccompProfile:
-              #   type: RuntimeDefault
-              # capabilities:
-              #   drop: ["ALL"]
+              seccompProfile:
+                type: unconfined
+              capabilities:
+                drop: ["ALL"]
 
             resources:
               limits:
