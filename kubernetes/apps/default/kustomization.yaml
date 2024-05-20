@@ -17,3 +17,4 @@ resources:
   # - ./pgadmin/ks.yaml
   - ./plex/ks.yaml
   - ./tautulli/ks.yaml
+  - ./chromium/ks.yaml
