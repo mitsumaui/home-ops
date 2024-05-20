@@ -41,7 +41,7 @@ spec:
               TITLE: "Chromium"
 
             securityContext:
-              allowPrivilegeEscalation: false
+              allowPrivilegeEscalation: true
               capabilities:
                 drop:
                   - ALL
