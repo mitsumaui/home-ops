@@ -38,6 +38,9 @@ spec:
       repository: docker.io/nodered/node-red
       tag: 2.2.3
 
+    env:
+      TZ: "Europe/London"
+
     service:
       main:
         ports:
