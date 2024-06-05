@@ -18,3 +18,4 @@ resources:
   - ./plex/ks.yaml
   - ./tautulli/ks.yaml
   - ./chromium/ks.yaml
+  - ./nas-backups/ks.yaml
