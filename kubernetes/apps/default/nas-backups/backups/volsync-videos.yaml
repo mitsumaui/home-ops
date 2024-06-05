@@ -32,7 +32,7 @@ spec:
     repository: nfs-videos-secret
     cacheCapacity: 8Gi
     cacheStorageClassName: local-path
-    cacheAccessModes: ReadWriteOnce
+    cacheAccessModes: ["ReadWriteOnce"]
     moverSecurityContext:
       runAsUser: 1003
       runAsGroup: 1001
