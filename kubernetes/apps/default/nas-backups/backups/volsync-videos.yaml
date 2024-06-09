@@ -9,10 +9,10 @@ metadata:
     app.kubernetes.io/name: omada
 type: Opaque
 stringData:
-  RESTIC_REPOSITORY: ${SECRET_RESTIC_S3_NAS}/videos
+  RESTIC_REPOSITORY: ${SECRET_RESTIC_NAS_REPO}/videos
   RESTIC_PASSWORD: ${SECRET_RESTIC_PASSWORD}
-  AWS_ACCESS_KEY_ID: ${SECRET_RESTIC_S3_KEY}
-  AWS_SECRET_ACCESS_KEY: ${SECRET_RESTIC_S3_PASS}
+  AWS_ACCESS_KEY_ID: ${SECRET_RESTIC_NAS_KEY}
+  AWS_SECRET_ACCESS_KEY: ${SECRET_RESTIC_NAS_PASS}
   RESTIC_PACK_SIZE: "60"
 ---
 # yaml-language-server: $schema=https://schemas.budimanjojo.com/volsync.backube/replicationsource_v1alpha1.json
