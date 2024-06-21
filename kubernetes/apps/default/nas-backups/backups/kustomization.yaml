@@ -4,4 +4,6 @@ kind: Kustomization
 namespace: default
 resources:
   - ./nfs-videos.yaml
+  - ./nfs-docs.yaml
   - ./volsync-videos.yaml
+  - ./volsync-docs.yaml
