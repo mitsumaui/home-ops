@@ -19,3 +19,4 @@ resources:
   - ./tautulli/ks.yaml
   - ./chromium/ks.yaml
   - ./nas-backups/ks.yaml
+  - ./xteve/ks.yaml
