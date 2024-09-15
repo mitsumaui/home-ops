@@ -17,6 +17,6 @@ resources:
   # - ./pgadmin/ks.yaml
   - ./plex/ks.yaml
   - ./tautulli/ks.yaml
-  - ./chromium/ks.yaml
+  # - ./chromium/ks.yaml
   - ./nas-backups/ks.yaml
   - ./xteve/ks.yaml
