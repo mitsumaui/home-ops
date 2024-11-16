@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: coredns
-      version: 1.29.0
+      version: 1.36.1
       sourceRef:
         kind: HelmRepository
         name: coredns
@@ -44,6 +44,8 @@ spec:
         port: 53
         plugins:
           - name: log
+            configBlock: |-
+              class error
           - name: errors
           - name: health
             configBlock: |-
@@ -77,13 +79,3 @@ spec:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
         effect: NoSchedule
-      - key: node-role.kubernetes.io/master
-        operator: Exists
-        effect: NoSchedule
-    topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/instance: coredns
