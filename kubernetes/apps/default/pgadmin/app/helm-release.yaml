@@ -33,7 +33,7 @@ spec:
           main:
             image:
               repository: dpage/pgadmin4
-              tag: 7.8
+              tag: 8.14
             envFrom:
               - secretRef:
                   name: pgadmin-secret
