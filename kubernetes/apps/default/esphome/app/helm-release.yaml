@@ -37,6 +37,7 @@ spec:
       ESPHOME__PORT: &port 6052
       ESPHOME__APPLICATION_URL: &host-cluster "esphome.${SECRET_DOMAIN}"
       ESPHOME__LOG_LEVEL: info
+      ESPHOME_DASHBOARD_USE_PING: true
 
     # App needs to run as root because of this: https://github.com/esphome/issues/issues/2752
     securityContext:
