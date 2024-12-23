@@ -14,7 +14,7 @@ resources:
   - ./cloudnative-pg/ks.yaml
   - ./home-assistant/ks.yaml
   - ./minio/ks.yaml
-  # - ./pgadmin/ks.yaml
+  - ./pgadmin/ks.yaml
   - ./plex/ks.yaml
   - ./tautulli/ks.yaml
   # - ./chromium/ks.yaml
