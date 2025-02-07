@@ -40,7 +40,7 @@ spec:
       nameOverride: *app
     image:
       repository: mbentley/omada-controller
-      tag: 5.15@sha256:92b7e74ce1349d812dc763ca63a72bae6f22a34c6d591e04d31beb1b113eb513
+      tag: 5.15@sha256:d4d752e7b3abca652d28c7805f3df0f6cf1d5c1da5bb48182d8c6f6ab719f036
       pullPolicy: Always
     env:
       TZ: ${TIMEZONE}
