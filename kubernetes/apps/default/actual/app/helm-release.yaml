@@ -7,32 +7,31 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.4.0
-      interval: 30m
+      version: 3.7.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  interval: 15m
+  interval: 30m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   values:
     controllers:
-      main:
-        enabled: true
-        type: statefulset
+      actual:
         annotations:
           reloader.stakater.com/auto: "true"
-        replicas: 1
-
-        pod:
-          enableServiceLinks: false
-          securityContext:
-            runAsUser: &context 1999
-            runAsGroup: *context
-            fsGroup: *context
-            fsGroupChangePolicy: "OnRootMismatch"
 
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/actualbudget/actual-server
               tag: 25.2.1
@@ -43,38 +42,19 @@ spec:
               ACTUAL_NORDIGEN_SECRET_ID: "${ACTUAL_NG_ID}"
               ACTUAL_NORDIGEN_SECRET_KEY: "${ACTUAL_NG_KEY}"
 
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /status
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: false
-
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1999
+        runAsGroup: 1999
 
     persistence:
-      config:
-        enabled: true
-        existingClaim: actual
-        advancedMounts:
-          main:
-            main:
-              - path: /data
+      data:
+        existingClaim: *app
+
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: *port
@@ -90,10 +70,6 @@ spec:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
