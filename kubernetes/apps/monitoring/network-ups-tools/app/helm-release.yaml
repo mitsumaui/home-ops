@@ -38,7 +38,7 @@ spec:
             privileged: true
         pod:
           annotations:
-            configmap.reloader.stakater.com/reload: *config
+            configmap.reloader.stakater.com/reload: network-ups-tools-config
           nodeSelector:
             ups.feature.node.kubernetes.io/apc: "true"
     service:
@@ -54,7 +54,6 @@ spec:
           metrics:
             enabled: true
             port: 9199
-
     persistence:
       config:
         type: configMap
