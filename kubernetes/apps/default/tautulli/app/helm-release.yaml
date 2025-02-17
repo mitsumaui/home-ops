@@ -7,40 +7,38 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.4.0
+      version: 3.7.1
       interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
   interval: 15m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   values:
     controllers:
-      main:
-        enabled: true
-        type: statefulset
+      tautulli:
         annotations:
           reloader.stakater.com/auto: "true"
-        replicas: 1
-
-        pod:
-          enableServiceLinks: false
-          securityContext:
-            runAsUser: &context 1999
-            runAsGroup: *context
-            fsGroup: *context
-            fsGroupChangePolicy: "OnRootMismatch"
-
         containers:
           main:
             image:
               repository: ghcr.io/onedr0p/tautulli
-              tag: 2.15.1
+              tag: 2.15.1@sha256:a8f4aa34e7973e5cb678692c1198e9c1790b7a3b49ce833b7196ce9c641e61f1
             env:
               TZ: "Europe/London"
               LOG_LEVEL: "info"
               PORT: &port 8181
-
             probes:
               liveness: &probes
                 enabled: true
@@ -48,54 +46,49 @@ spec:
                 spec:
                   httpGet:
                     path: /status
-                    port: &port 8181
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
               startup:
-                enabled: false
-
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
-
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
             resources:
               requests:
                 cpu: 10m
                 memory: 100Mi
               limits:
                 memory: 125Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: &context 1999
+        runAsGroup: *context
+        fsGroup: *context
+        fsGroupChangePolicy: OnRootMismatch
 
     persistence:
       config:
-        enabled: true
-        existingClaim: tautulli
-        advancedMounts:
-          main:
-            main:
-              - path: /config
+        existingClaim: *app
+
     service:
-      main:
+      app:
+        controller: tautulli
         ports:
           http:
             port: *port
 
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
