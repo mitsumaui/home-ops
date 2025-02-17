@@ -1,21 +1,20 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: home-assistant
-  namespace: default
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 2.0.3
+      version: 3.7.1
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: bjw-s-charts
         namespace: flux-system
-  maxHistory: 2
+      interval: 30m
   install:
     remediation:
       retries: 3
@@ -28,27 +27,25 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    # - name: volsync
-    #   namespace: volsync
   values:
     controllers:
-      main:
+      home-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 16.6
-              pullPolicy: IfNotPresent
-            envFrom: &envFrom
-              - secretRef:
-                  name: home-assistant-secret
+
+        pod:
+          securityContext:
+            runAsUser: 0 # Change when starting from scratch
+            runAsGroup: 568
+            runAsNonRoot: false # Change when starting from scratch
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+
         containers:
-          main:
+          app:
             image:
-              repository: ghcr.io/onedr0p/home-assistant
-              tag: 2025.2.2
+              repository: ghcr.io/home-assistant/home-assistant
+              tag: 2025.2.4
             env:
               TZ: Europe/London
               POSTGRES_HOST: hass-psql-v16-1-rw.default.svc.cluster.local
@@ -63,46 +60,99 @@ spec:
                 enabled: false
               startup:
                 enabled: false
+
             resources:
               requests:
-                cpu: 10m
+                cpu: 100m
                 memory: 128Mi
               limits:
                 memory: 1Gi
-        pod:
-          hostNetwork: true
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
+
+          code-server:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.96.4
+            args:
+              [
+                "--auth",
+                "none",
+                "--disable-telemetry",
+                "--disable-update-check",
+                "--user-data-dir",
+                "/config/.vscode",
+                "--extensions-dir",
+                "/config/.vscode",
+                "--port",
+                "8080",
+                "/config",
+              ]
+
+            env:
+              TZ: Europe/London
+              # HASS_SERVER: http://localhost:8123
+              # HASS_TOKEN:
+              #   valueFrom:
+              #     secretKeyRef:
+              #       name: home-assistant-secret
+              #       key: VSCODE_TOKEN
+
+            resources:
+              requests:
+                cpu: 10m
+                memory: 100M
+              limits:
+                memory: 500M
+
     service:
-      main:
+      app:
+        controller: home-assistant
+        type: LoadBalancer
+        externalTrafficPolicy: Cluster
+        annotations:
+          io.cilium/lb-ipam-ips: "${SVC_HASS_IP}"
         ports:
           http:
             port: 8123
-        type: LoadBalancer
-        annotations:
-          io.cilium/lb-ipam-ips: "${SVC_HASS_IP}"
-        externalTrafficPolicy: Cluster
+          code-server:
+            port: 8080
+
     ingress:
-      main:
-        enabled: true
+      app:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           hajimari.io/icon: mdi:home-assistant
         hosts:
-          - host: &host "hass.${SECRET_DOMAIN}"
+          - host: "hass.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
+
+      code-server:
+        enabled: true
+        className: internal
+        annotations:
+          hajimari.io/icon: cib:visual-studio-code
+        hosts:
+          - host: "hass-vs.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: code-server
+
     persistence:
       config:
-        enabled: true
         existingClaim: home-assistant-config
+
+
+      # https://community.home-assistant.io/t/wth-is-going-on-with-docker-container-installs-and-third-party-integrations-that-need-python-modules/806430/6
+      hack:
+        type: emptyDir
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /.dockerenv
+                subPath: .dockerenv
