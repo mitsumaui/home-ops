@@ -3,44 +3,62 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: plex
+  name: &app plex
 spec:
   chart:
     spec:
       chart: app-template
-      version: 2.4.0
+      version: 3.7.1
       interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
   interval: 30m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   values:
     controllers:
-      main:
+      plex:
         annotations:
           reloader.stakater.com/auto: "true"
 
         pod:
-          enableServiceLinks: false
           nodeSelector:
             intel.feature.node.kubernetes.io/gpu: "true"
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            runAsNonRoot: true
-            fsGroup: 568
-            fsGroupChangePolicy: "OnRootMismatch"
-            supplementalGroups:
-              - 44
-              - 109
-              - 1001
 
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/plex
-              tag: 1.32.8.7639-fb6452ebf@sha256:97bf4a8eac34de4b0df78e4fc3e2b501187161a3a264fa2b220bd51b0f89ba77
+              tag: 1.41.4.9463-630c9f557@sha256:1f66577fe4fa60dc0984d568ca55fb5c2b3fae8498ef96ac1ed57710517552be
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /identity
+                    port: 32400
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
             resources:
               requests:
                 # cpu: 100m
@@ -50,10 +68,23 @@ spec:
                 gpu.intel.com/i915: 1
                 # memory: 9248M
 
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+        supplementalGroups:
+          - 44
+          - 109
+          - 1001
+
     service:
-      main:
+      app:
+        controller: plex
         type: LoadBalancer
-        externalTrafficPolicy: Cluster
         annotations:
           io.cilium/lb-ipam-ips: ${SVC_PLEX_IP}
         ports:
@@ -61,31 +92,22 @@ spec:
             port: 32400
 
     ingress:
-      main:
-        enabled: true
+      app:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
           nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-        className: internal
+        className: external
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
 
     persistence:
       config:
-        enabled: true
-        existingClaim: plex
-        advancedMounts:
-          main:
-            main:
-              - path: /config
+        existingClaim: *app
       transcode:
         type: emptyDir
       tmp:
@@ -95,30 +117,30 @@ spec:
         server: "${NAS_SERVER}"
         path: "/mnt/Vol1/Movies"
         advancedMounts:
-          main:
-            main:
+          plex:
+            app:
               - path: /media-movies
       nfs-cfmovies:
         type: nfs
         server: "${NAS_SERVER}"
         path: "/mnt/Vol1/CFMovies"
         advancedMounts:
-          main:
-            main:
+          plex:
+            app:
               - path: /media-cfmovies
       nfs-cftvshows:
         type: nfs
         server: "${NAS_SERVER}"
         path: "/mnt/SG6TB/CFTVShows"
         advancedMounts:
-          main:
-            main:
+          plex:
+            app:
               - path: /media-cftvshows
       nfs-tvshows:
         type: nfs
         server: "${NAS_SERVER}"
         path: "/mnt/SG6TB/TVShows"
         advancedMounts:
-          main:
-            main:
+          plex:
+            app:
               - path: /media-tvshows
