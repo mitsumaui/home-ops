@@ -2,21 +2,17 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./namespace.yaml
-  - ./hajimari/ks.yaml
-  - ./discord-template-notifier/ks.yaml
-  - ./esphome/ks.yaml
-  - ./node-red/ks.yaml
   - ./actual/ks.yaml
-  - ./omada/ks.yaml
-  - ./emqx/ks.yaml
-  - ./zigbee2mqtt/ks.yaml
   - ./cloudnative-pg/ks.yaml
+  - ./emqx/ks.yaml
+  - ./esphome/ks.yaml
+  - ./hajimari/ks.yaml
   - ./home-assistant/ks.yaml
   - ./minio/ks.yaml
-  # - ./pgadmin/ks.yaml
+  - ./nas-backups/ks.yaml
+  - ./node-red/ks.yaml
+  - ./omada/ks.yaml
   - ./plex/ks.yaml
   - ./tautulli/ks.yaml
-  # - ./chromium/ks.yaml
-  - ./nas-backups/ks.yaml
-  - ./xteve/ks.yaml
+  - ./zigbee2mqtt/ks.yaml
+  - ./namespace.yaml
