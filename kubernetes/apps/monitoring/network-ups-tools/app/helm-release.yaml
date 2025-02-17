@@ -57,11 +57,11 @@ spec:
 
     persistence:
       config:
-        enabled: true
         type: configMap
-        name: &config network-ups-tools-config
-        mountPath: /etc/nut
-        defaultMode: 256
+        name: network-ups-tools-config
+        defaultMode: 0400
+        globalMounts:
+          - path: /etc/nut
       ups:
         type: hostPath
         hostPath: /dev/usb/hiddev0
