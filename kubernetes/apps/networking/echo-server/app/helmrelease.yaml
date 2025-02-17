@@ -23,7 +23,7 @@ spec:
       retries: 3
   dependsOn:
     - name: cluster-apps-cloudflared
-      namespace: network
+      namespace: flux-system
   values:
     controllers:
       echo-server:
