@@ -13,6 +13,7 @@ resources:
   - ./node-red/ks.yaml
   - ./omada/ks.yaml
   - ./plex/ks.yaml
+  - ./prowlarr/ks.yaml
   - ./tautulli/ks.yaml
   - ./zigbee2mqtt/ks.yaml
   - ./namespace.yaml
