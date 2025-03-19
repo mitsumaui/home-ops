@@ -36,8 +36,6 @@ spec:
             env:
               RADARR__APP__INSTANCENAME: Radarr
               RADARR__APP__THEME: dark
-              RADARR__AUTH__METHOD: External
-              RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
               RADARR__LOG__DBENABLED: "False"
               RADARR__LOG__LEVEL: info
               RADARR__SERVER__PORT: &port 80
@@ -78,17 +76,19 @@ spec:
         ports:
           http:
             port: *port
-    route:
+    ingress:
       app:
-        hostnames: ["{{ .Release.Name }}.${SECRET_DOMAIN}"]
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
+        className: internal
+        annotations:
+          hajimari.io/enable: "true"
+          # hajimari.io/icon: "cloud-search"
+        hosts:
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       config:
         existingClaim: radarr
