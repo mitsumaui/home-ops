@@ -62,11 +62,11 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 100m
-              limits:
-                memory: 12Gi
+            # resources:
+            #   requests:
+            #     cpu: 100m
+            #   limits:
+            #     memory: 12Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
