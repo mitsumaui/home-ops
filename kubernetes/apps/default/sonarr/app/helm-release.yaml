@@ -101,6 +101,6 @@ spec:
         server: "${NAS_SERVER}"
         path: /mnt/SG6TB/TVShows
         globalMounts:
-          - path: /media
+          - path: /media/TVShows
       tmp:
         type: emptyDir
