@@ -96,7 +96,7 @@ spec:
         existingClaim: sonarr-cache
         globalMounts:
           - path: /config/MediaCover
-      media:
+      data:
         existingClaim: media-nfs
       tmp:
         type: emptyDir
