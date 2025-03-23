@@ -97,10 +97,6 @@ spec:
         globalMounts:
           - path: /config/MediaCover
       media:
-        type: nfs
-        server: "${NAS_SERVER}"
-        path: /mnt/SG6TB2/Media
-        globalMounts:
-          - path: /media
+        existingClaim: media-nfs
       tmp:
         type: emptyDir
