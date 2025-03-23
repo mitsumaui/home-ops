@@ -99,9 +99,8 @@ spec:
       media:
         type: nfs
         server: "${NAS_SERVER}"
-        path: /mnt/SG6TB/sab
+        path: /mnt/SG6TB2/Media
         globalMounts:
-          - path: /media/Downloads/sabnzbd
-            subPath: Downloads/sabnzbd
+          - path: /media
       tmp:
         type: emptyDir

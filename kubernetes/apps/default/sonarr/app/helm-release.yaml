@@ -99,8 +99,8 @@ spec:
       media:
         type: nfs
         server: "${NAS_SERVER}"
-        path: /mnt/SG6TB/TVShows
+        path: /mnt/SG6TB2/Media
         globalMounts:
-          - path: /media/TVShows
+          - path: /media
       tmp:
         type: emptyDir
