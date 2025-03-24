@@ -65,10 +65,10 @@ spec:
                 memory: 4Gi
     defaultPodOptions:
       securityContext:
-        # runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
@@ -81,7 +81,7 @@ spec:
         className: internal
         annotations:
           hajimari.io/enable: "true"
-          # hajimari.io/icon: "cloud-search"
+          hajimari.io/icon: "mdi:television-classic"
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:

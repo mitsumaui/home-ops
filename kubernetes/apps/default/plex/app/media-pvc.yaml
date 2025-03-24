@@ -15,7 +15,6 @@ spec:
     server: 192.168.167.5
     path: /mnt/SG6TB2/Media
   mountOptions:
-    # - nobrl
     - nfsvers=3
     - nconnect=8
     - soft

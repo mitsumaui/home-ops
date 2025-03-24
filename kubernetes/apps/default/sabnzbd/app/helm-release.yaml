@@ -85,7 +85,7 @@ spec:
         className: internal
         annotations:
           hajimari.io/enable: "true"
-          # hajimari.io/icon: "cloud-search"
+          hajimari.io/icon: "mdi:download"
         hosts:
           - host: "sab.${SECRET_DOMAIN}"
             paths:
