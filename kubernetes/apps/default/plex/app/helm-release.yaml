@@ -144,3 +144,5 @@ spec:
           plex:
             app:
               - path: /media-tvshows
+      media:
+        existingClaim: media-nfs
