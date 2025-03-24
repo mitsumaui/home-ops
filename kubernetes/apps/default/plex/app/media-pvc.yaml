@@ -18,8 +18,9 @@ spec:
     # - nobrl
     - nfsvers=3
     - nconnect=8
-    - hard
+    - soft
     - noatime
+    - nolock
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
