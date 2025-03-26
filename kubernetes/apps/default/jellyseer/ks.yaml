@@ -3,14 +3,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-jellyseer
+  name: cluster-apps-jellyseerr
   namespace: flux-system
 spec:
   targetNamespace: default
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app jellyseer
-  path: ./kubernetes/apps/default/jellyseer/app
+      app.kubernetes.io/name: &app jellyseerr
+  path: ./kubernetes/apps/default/jellyseerr/app
   prune: true
   sourceRef:
     kind: GitRepository

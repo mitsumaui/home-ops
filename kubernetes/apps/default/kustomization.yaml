@@ -8,7 +8,7 @@ resources:
   - ./esphome/ks.yaml
   - ./hajimari/ks.yaml
   - ./home-assistant/ks.yaml
-  - ./jellyseer/ks.yaml
+  - ./jellyseerr/ks.yaml
   - ./minio/ks.yaml
   - ./nas-backups/ks.yaml
   - ./node-red/ks.yaml
