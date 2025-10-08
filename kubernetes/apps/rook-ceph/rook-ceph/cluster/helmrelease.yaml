@@ -89,9 +89,9 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          # - name: "k8s-nuc"
-          #   devices:
-          #     - name: "/dev/nvme0n1p3"
+          - name: "k8s-nuc"
+            devices:
+              - name: "/dev/nvme0n1p3"
           - name: "k8s-hpe1"
             devices:
               - name: "/dev/nvme0n1"
