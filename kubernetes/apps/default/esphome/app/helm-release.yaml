@@ -35,7 +35,7 @@ spec:
           app:
             image:
               repository: esphome/esphome
-              tag: 2025.10.3
+              tag: 2025.10.5
             env:
               TZ: "Europe/London"
               ESPHOME__INSTANCE_NAME: ESPHome
