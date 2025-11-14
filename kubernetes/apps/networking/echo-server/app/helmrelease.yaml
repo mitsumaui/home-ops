@@ -63,9 +63,19 @@ spec:
         runAsUser: 65534
         runAsGroup: 65534
         seccompProfile: { type: RuntimeDefault }
+    # service:
+    #   app:
+    #     controller: echo-server
+    #     ports:
+    #       http:
+    #         port: *port
     service:
       app:
         controller: echo-server
+        type: LoadBalancer
+        externalTrafficPolicy: Cluster
+        annotations:
+          io.cilium/lb-ipam-ips: "192.168.167.212"
         ports:
           http:
             port: *port
