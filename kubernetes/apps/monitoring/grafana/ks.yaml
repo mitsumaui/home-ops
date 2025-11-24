@@ -11,9 +11,9 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  targetNamespace: observability
+    name: home-kubernetes
+    # namespace: flux-system
+  targetNamespace: monitoring
   wait: true
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
@@ -33,7 +33,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  targetNamespace: observability
+    name: home-kubernetes
+    # namespace: flux-system
+  targetNamespace: monitoring
   wait: false
