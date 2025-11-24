@@ -13,4 +13,5 @@ spec:
     name: prometheus
     access: proxy
     isDefault: true
-    url: http://prometheus-operated.observability.svc.cluster.local:9090
+    url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+    # http://prometheus-operated.observability.svc.cluster.local:9090
