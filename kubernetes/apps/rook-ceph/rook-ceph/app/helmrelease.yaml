@@ -15,13 +15,26 @@ spec:
       enableLiveness: true
       serviceMonitor:
         enabled: true
+      # Zero CSI resources to prevent pending pods
+      csiCephFSPluginResource: {}
+      csiCephFSProvisionerResource: {}
+      csiRBDPluginResource: {}
+      csiRBDProvisionerResource: {}
+      csiNFSPluginResource: {}
+      csiNFSProvisionerResource: {}
     image:
       repository: ghcr.io/rook/ceph
     monitoring:
       enabled: true
     resources: {}
-    # resources:
-    #   # requests:
-    #     # memory: 128Mi # unchangable
-    #     # cpu: 100m # unchangable
-    #   limits: {}
+    # Zero all Ceph component resources
+    cephClusterSpec:
+      resources: {}
+      mon:
+        resources: {}
+      mgr:
+        resources: {}
+      osd:
+        resources: {}
+      mds:
+        resources: {}

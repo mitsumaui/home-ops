@@ -24,17 +24,20 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
+    # Zero cluster-level resources
+    resources: {}
     cephClusterSpec:
       cephConfig:
         global:
-          bdev_enable_discard: "true" # quote
-          bdev_async_discard_threads: "1" # quote
-          osd_class_update_on_start: "false" # quote
-          device_failure_prediction_mode: local # requires mgr module
+          bdev_enable_discard: "true"
+          bdev_async_discard_threads: "1"
+          osd_class_update_on_start: "false"
+          device_failure_prediction_mode: local
       cleanupPolicy:
         wipeDevicesFromOtherClusters: true
       crashCollector:
         disable: false
+        resources: {}
       csi:
         readAffinity:
           enabled: true
@@ -53,15 +56,19 @@ spec:
             enabled: true
           - name: rook
             enabled: true
+        resources: {}
       network:
         provider: host
         connections:
           requireMsgr2: true
+      # Zero all CephCluster component resources
       resources: {}
-      # resources:
-      #   osd:
-      #     limits:
-      #       memory: 8Gi
+      mon:
+        resources: {}
+      osd:
+        resources: {}
+      mds:
+        resources: {}
       storage:
         useAllNodes: false
         useAllDevices: false
@@ -77,6 +84,7 @@ spec:
           - name: "k8s-hpe1"
             devices:
               - name: "/dev/nvme0n1"
+    # Zero blockpool resources
     cephBlockPools:
       - name: ceph-blockpool
         spec:
