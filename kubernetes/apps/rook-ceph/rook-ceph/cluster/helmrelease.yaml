@@ -67,10 +67,10 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: "k8s-gmk0"
+          - name: "k8s-gmk1"
             devices:
               - name: "/dev/nvme0n1"
-          - name: "k8s-gmk1"
+          - name: "k8s-gmk2"
             devices:
               - name: "/dev/nvme0n1"
           - name: "k8s-hpe1"
