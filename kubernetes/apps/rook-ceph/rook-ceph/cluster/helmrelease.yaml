@@ -133,9 +133,9 @@ spec:
                       app.kubernetes.io/name: ceph-mds
                       app.kubernetes.io/part-of: *cephFileSystemName
             resources:
-              requests:
-                cpu: 100m
-                memory: 1Gi
+              # frequests:
+                # cpu: 100m
+                # memory: 1Gi
               limits:
                 memory: 4Gi
         storageClass:
