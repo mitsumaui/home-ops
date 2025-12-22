@@ -57,10 +57,11 @@ spec:
         provider: host
         connections:
           requireMsgr2: true
-      resources:
-        osd:
-          limits:
-            memory: 8Gi
+      resources: {}
+      # resources:
+      #   osd:
+      #     limits:
+      #       memory: 8Gi
       storage:
         useAllNodes: false
         useAllDevices: false
@@ -132,12 +133,13 @@ spec:
                     matchLabels:
                       app.kubernetes.io/name: ceph-mds
                       app.kubernetes.io/part-of: *cephFileSystemName
-            resources:
-              # frequests:
-                # cpu: 100m
-                # memory: 1Gi
-              limits:
-                memory: 4Gi
+            resources: {}
+            # resources:
+            #   # frequests:
+            #     # cpu: 100m
+            #     # memory: 1Gi
+            #   limits:
+            #     memory: 4Gi
         storageClass:
           enabled: true
           isDefault: false
