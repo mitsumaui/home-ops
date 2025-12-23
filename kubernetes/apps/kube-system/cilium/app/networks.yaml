@@ -6,7 +6,7 @@ metadata:
 spec:
   allowFirstLastIPs: "No"
   blocks:
-    - cidr: "10.0.30.0/24"
+    # - cidr: "10.0.30.0/24"
     - cidr: "10.0.31.0/24"
 ---
 apiVersion: cilium.io/v2alpha1
