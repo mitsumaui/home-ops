@@ -9,6 +9,14 @@ spec:
     kind: OCIRepository
     name: rook-ceph-cluster
   interval: 1h
+  timeout: 15m
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   values:
     monitoring:
       enabled: true
@@ -24,8 +32,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-    # Zero cluster-level resources
-    resources: {}
     cephClusterSpec:
       cephConfig:
         global:
@@ -37,7 +43,6 @@ spec:
         wipeDevicesFromOtherClusters: true
       crashCollector:
         disable: false
-        resources: {}
       csi:
         readAffinity:
           enabled: true
@@ -56,19 +61,63 @@ spec:
             enabled: true
           - name: rook
             enabled: true
-        resources: {}
       network:
         provider: host
         connections:
           requireMsgr2: true
-      # Zero all CephCluster component resources
-      resources: {}
-      mon:
-        resources: {}
-      osd:
-        resources: {}
-      mds:
-        resources: {}
+      resources:
+        mgr:
+          limits: &mgr-hw
+            cpu: 500m
+            memory: 700Mi
+          requests: *mgr-hw
+        mon:
+          limits: &mon-hw
+            cpu: 500m
+            memory: 1024Mi
+          requests: *mon-hw
+        osd:
+          limits:
+            cpu: 1
+            memory: 1600Mi
+          requests:
+            cpu: 500m
+            memory: 1600Mi
+        prepareosd:
+          limits:
+            cpu: 1000m
+            memory: 3000Mi
+          requests:
+            cpu: 50m
+            memory: 200Mi
+        mgr-sidecar:
+          limits:
+            cpu: 128m
+            memory: 100Mi
+          requests:
+            cpu: 50m
+            memory: 40Mi
+        crashcollector:
+          limits:
+            cpu: 100m
+            memory: 64M
+          requests:
+            cpu: 15m
+            memory: 32M
+        logcollector:
+          limits:
+            cpu: 50m
+            memory: 32Mi
+          requests:
+            cpu: 5m
+            memory: 16Mi
+        cleanup:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 100Mi
       storage:
         useAllNodes: false
         useAllDevices: false
@@ -84,7 +133,6 @@ spec:
           - name: "k8s-hpe1"
             devices:
               - name: "/dev/nvme0n1"
-    # Zero blockpool resources
     cephBlockPools:
       - name: ceph-blockpool
         spec:
@@ -141,13 +189,6 @@ spec:
                     matchLabels:
                       app.kubernetes.io/name: ceph-mds
                       app.kubernetes.io/part-of: *cephFileSystemName
-            resources: {}
-            # resources:
-            #   # frequests:
-            #     # cpu: 100m
-            #     # memory: 1Gi
-            #   limits:
-            #     memory: 4Gi
         storageClass:
           enabled: true
           isDefault: false
