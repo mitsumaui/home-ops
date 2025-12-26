@@ -65,6 +65,7 @@ spec:
               requests:
                 cpu: 10m
               limits:
+<<<<<<< HEAD:kubernetes/apps/default/zigbee2mqtt/app/helmrelease.yaml
                 memory: 1Gi
     defaultPodOptions:
       securityContext:
@@ -73,6 +74,12 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
+=======
+                memory: 512Mi
+#        pod:
+#          nodeSelector:
+#            zzh.feature.node.kubernetes.io/zigbee: "true"
+>>>>>>> 69f8e63 (no node selector):kubernetes/apps/default/zigbee2mqtt/app/helm-release.yaml
     service:
       app:
         ports:
