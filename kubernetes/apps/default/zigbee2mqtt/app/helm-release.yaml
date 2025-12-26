@@ -104,9 +104,9 @@ spec:
     persistence:
       config:
         existingClaim: zigbee2mqtt
-      usb:
-        type: hostPath
-        hostPath: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
-        hostPathType: CharDevice
-        globalMounts:
-          - path: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+#      usb:
+#        type: hostPath
+#        hostPath: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+#        hostPathType: CharDevice
+#        globalMounts:
+#          - path: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
