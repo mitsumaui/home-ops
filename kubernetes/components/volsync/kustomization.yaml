@@ -1,0 +1,8 @@
+---
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+resources:
+  - ./pvc.yaml
+  - ./id-secret.sops.yaml
+  - ./id-destination.yaml
+  # - ./r2-source.yaml
