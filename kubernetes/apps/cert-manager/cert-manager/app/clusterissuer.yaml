@@ -2,12 +2,18 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt-production
+  name: zerossl-production
 spec:
   acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme.zerossl.com/v2/DV90
     privateKeySecretRef:
-      name: letsencrypt-production
+      name: zerossl-production
+    externalAccountBinding:
+      keyID: WpM-BhgvQz43LAUcncZeBA
+      keySecretRef:
+        name: zero-ssl-eabsecret
+        key: secret
+      keyAlgorithm: HS256
     solvers:
       - dns01:
           cloudflare:
@@ -16,3 +22,21 @@ spec:
               key: api-token
         selector:
           dnsZones: ["${SECRET_DOMAIN}"]
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: ClusterIssuer
+# metadata:
+#   name: letsencrypt-production
+# spec:
+#   acme:
+#     server: https://acme-v02.api.letsencrypt.org/directory
+#     privateKeySecretRef:
+#       name: letsencrypt-production
+#     solvers:
+#       - dns01:
+#           cloudflare:
+#             apiTokenSecretRef:
+#               name: cert-manager-secret
+#               key: api-token
+#         selector:
+#           dnsZones: ["${SECRET_DOMAIN}"]
