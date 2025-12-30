@@ -52,7 +52,7 @@ spec:
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: external.${SECRET_DOMAIN}
-      lbipam.cilium.io/ips: "10.0.31.8"
+      lbipam.cilium.io/ips: "10.0.31.11"
   listeners:
     - name: http
       protocol: HTTP
@@ -82,7 +82,7 @@ spec:
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: internal.${SECRET_DOMAIN}
-      lbipam.cilium.io/ips: "10.0.31.7"
+      lbipam.cilium.io/ips: "10.0.31.10"
   listeners:
     - name: http
       protocol: HTTP
@@ -126,7 +126,8 @@ metadata:
 spec:
   clientIPDetection:
     xForwardedFor:
-      numTrustedHops: 1
+      trustedCIDRs:
+        - "10.42.0.0/16"
   connection:
     bufferLimit: 4Mi
     maxAcceptPerSocketEvent: 0
