@@ -13,7 +13,6 @@ spec:
       envoyDeployment:
         replicas: 2
         container:
-          imageRepository: mirror.gcr.io/envoyproxy/envoy
           resources:
             requests:
               cpu: 100m
@@ -126,8 +125,7 @@ metadata:
 spec:
   clientIPDetection:
     xForwardedFor:
-      trustedCIDRs:
-        - "10.42.0.0/16"
+      numTrustedHops: 1
   connection:
     bufferLimit: 4Mi
     maxAcceptPerSocketEvent: 0
