@@ -17,7 +17,7 @@ spec:
       - name: cluster-secrets
         kind: Secret
     substitute:
-      APP: tautulli
+      APP: tautulli-new
       VOLSYNC_STORAGECLASS: ceph-block
       VOLSYNC_CAPACITY: 5Gi
   prune: true
