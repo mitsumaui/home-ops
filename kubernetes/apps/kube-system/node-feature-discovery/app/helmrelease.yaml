@@ -5,7 +5,7 @@ metadata:
   name: node-feature-discovery
 spec:
   chartRef:
-    kind: HelmRepository
+    kind: OCIRepository
     name: node-feature-discovery
   interval: 30m
   values:
