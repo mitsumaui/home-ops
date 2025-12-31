@@ -6,17 +6,17 @@ resources:
   - ./cloudnative-pg/ks.yaml
   - ./emqx/ks.yaml
   - ./esphome/ks.yaml
-  - ./hajimari/ks.yaml
+  # - ./hajimari/ks.yaml
   - ./home-assistant/ks.yaml
-  - ./jellyseerr/ks.yaml
+  # - ./jellyseerr/ks.yaml
   - ./minio/ks.yaml
   - ./nas-backups/ks.yaml
   - ./node-red/ks.yaml
-  - ./plex/ks.yaml
-  - ./prowlarr/ks.yaml
-  - ./radarr/ks.yaml
-  - ./sabnzbd/ks.yaml
-  - ./sonarr/ks.yaml
-  - ./tautulli/ks.yaml
+  # - ./plex/ks.yaml
+  # - ./prowlarr/ks.yaml
+  # - ./radarr/ks.yaml
+  # - ./sabnzbd/ks.yaml
+  # - ./sonarr/ks.yaml
+  # - ./tautulli/ks.yaml
   - ./zigbee2mqtt/ks.yaml
   - ./namespace.yaml
