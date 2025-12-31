@@ -4,6 +4,8 @@ kind: Kustomization
 metadata:
   name: &app actual
 spec:
+  components:
+    - ../../../../components/volsync
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
