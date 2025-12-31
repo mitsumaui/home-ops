@@ -9,7 +9,7 @@ components:
 resources:
   - ./namespace.yaml
   - ./echo/ks.yaml
-  # - ./tautulli/ks.yaml
+  - ./tautulli/ks.yaml
   - ./actual/ks.yaml
   - ./esphome/ks.yaml
   - ./sonarr/ks.yaml
