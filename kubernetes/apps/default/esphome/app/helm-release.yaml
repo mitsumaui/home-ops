@@ -48,7 +48,7 @@ spec:
         forceRename: "{{.Release.Name}}"
         ports:
           http:
-            port: *port
+            port: &port 6052
     persistence:
       config:
         existingClaim: *app
