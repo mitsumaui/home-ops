@@ -12,3 +12,7 @@ resources:
   # - ./tautulli/ks.yaml
   # - ./actual/ks.yaml
   # - ./esphome/ks.yaml
+  - ./sonarr/ks.yaml
+  - ./radarr/ks.yaml
+  - ./jellyseerr/ks.yaml
+  - ./sabnzbd/ks.yaml
