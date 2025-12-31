@@ -11,4 +11,4 @@ resources:
   - ./echo/ks.yaml
   # - ./tautulli/ks.yaml
   # - ./actual/ks.yaml
-  - ./esphome/ks.yaml
+  # - ./esphome/ks.yaml
