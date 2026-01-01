@@ -20,3 +20,4 @@ resources:
   - ./plex/ks.yaml
   - ./mosquitto/ks.yaml
   - ./node-red/ks.yaml
+  - ./cloudnative-pg/ks.yaml
