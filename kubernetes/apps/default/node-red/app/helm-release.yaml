@@ -35,14 +35,14 @@ spec:
             securityContext:
               runAsUser: 1000
               runAsGroup: 568
-              runAsNonRoot: true
-              fsGroup: 568
-              fsGroupChangePolicy: OnRootMismatch
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
+              # runAsNonRoot: true
+              # fsGroup: 568
+              # fsGroupChangePolicy: OnRootMismatch
+              # allowPrivilegeEscalation: false
+              # readOnlyRootFilesystem: true
+              # capabilities:
+              #   drop:
+              #     - ALL
     service:
       app:
         controller: *app
