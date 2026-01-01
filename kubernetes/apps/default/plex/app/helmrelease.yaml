@@ -116,48 +116,48 @@ spec:
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}"
-      nfs-movies:
-        type: nfs
-        server: "10.0.30.2"
-        path: "/mnt/Vol1/Movies"
-        advancedMounts:
-          plex:
-            app:
-              - path: /media-movies
-                readOnly: true
-      nfs-cfmovies:
-        type: nfs
-        server: "10.0.30.2"
-        path: "/mnt/Vol1/CFMovies"
-        advancedMounts:
-          plex:
-            app:
-              - path: /media-cfmovies
-                readOnly: true
-      nfs-cftvshows:
-        type: nfs
-        server: "10.0.30.2"
-        path: "/mnt/SG6TB/CFTVShows"
-        advancedMounts:
-          plex:
-            app:
-              - path: /media-cftvshows
-                readOnly: true
-      nfs-tvshows:
-        type: nfs
-        server: "10.0.30.2"
-        path: "/mnt/SG6TB/TVShows"
-        advancedMounts:
-          plex:
-            app:
-              - path: /media-tvshows
-                readOnly: true
-      media:
-        type: nfs
-        server: "10.0.30.2"
-        path: /mnt/SG6TB2/Media
-        globalMounts:
-          - path: /media
-            readOnly: true
+      # nfs-movies:
+      #   type: nfs
+      #   server: "10.0.30.2"
+      #   path: "/mnt/Vol1/Movies"
+      #   advancedMounts:
+      #     plex:
+      #       app:
+      #         - path: /media-movies
+      #           readOnly: true
+      # nfs-cfmovies:
+      #   type: nfs
+      #   server: "10.0.30.2"
+      #   path: "/mnt/Vol1/CFMovies"
+      #   advancedMounts:
+      #     plex:
+      #       app:
+      #         - path: /media-cfmovies
+      #           readOnly: true
+      # nfs-cftvshows:
+      #   type: nfs
+      #   server: "10.0.30.2"
+      #   path: "/mnt/SG6TB/CFTVShows"
+      #   advancedMounts:
+      #     plex:
+      #       app:
+      #         - path: /media-cftvshows
+      #           readOnly: true
+      # nfs-tvshows:
+      #   type: nfs
+      #   server: "10.0.30.2"
+      #   path: "/mnt/SG6TB/TVShows"
+      #   advancedMounts:
+      #     plex:
+      #       app:
+      #         - path: /media-tvshows
+      #           readOnly: true
+      # media:
+      #   type: nfs
+      #   server: "10.0.30.2"
+      #   path: /mnt/SG6TB2/Media
+      #   globalMounts:
+      #     - path: /media
+      #       readOnly: true
       tmp:
         type: emptyDir
