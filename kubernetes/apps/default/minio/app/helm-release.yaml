@@ -55,6 +55,10 @@ spec:
     service:
       app:
         controller: *app
+        type: LoadBalancer
+        externalTrafficPolicy: Cluster
+        annotations:
+          io.cilium/lb-ipam-ips: 192.168.167.82
         ports:
           http:
             port: 9001
