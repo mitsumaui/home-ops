@@ -11,7 +11,7 @@ resources:
   # - ./jellyseerr/ks.yaml
   - ./minio/ks.yaml
   - ./nas-backups/ks.yaml
-  # - ./node-red/ks.yaml
+  - ./node-red/ks.yaml
   # - ./plex/ks.yaml
   # - ./prowlarr/ks.yaml
   # - ./radarr/ks.yaml
