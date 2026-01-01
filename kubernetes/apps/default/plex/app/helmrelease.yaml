@@ -20,7 +20,7 @@ spec:
               repository: ghcr.io/home-operations/plex
               tag: 1.42.2.10156@sha256:9ad8a3506e1d8ebda873a668603c1a2c10e6887969564561be669efd65ae8871
             env:
-              TZ: America/New_York
+              TZ: Europe/London
               PLEX_ADVERTISE_URL: https://plex.${SECRET_DOMAIN}:443,http://10.0.30.35:32400,http://plex.default.svc.cluster.local:32400
               PLEX_NO_AUTH_NETWORKS: 192.168.167.0/24,10.0.10.0/24,10.0.11.0/24
             probes:
@@ -50,8 +50,9 @@ spec:
                 - name: gpu
               requests:
                 cpu: 50m
-              # limits:
-              #   memory: 16Gi
+                memory: 2Gi
+              limits:
+                memory: 5Gi
     defaultPodOptions:
       resourceClaims:
         - name: gpu
@@ -76,6 +77,18 @@ spec:
         ports:
           http:
             port: *port
+    rawResources:
+      gpu:
+        apiVersion: resource.k8s.io/v1
+        kind: ResourceClaimTemplate
+        spec:
+          spec:
+            spec:
+              devices:
+                requests:
+                  - name: gpu
+                    exactly:
+                      deviceClassName: gpu.intel.com
     route:
       app:
         hostnames:
