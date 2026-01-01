@@ -19,3 +19,4 @@ resources:
   - ./prowlarr/ks.yaml
   - ./plex/ks.yaml
   - ./mosquitto/ks.yaml
+  - ./node-red/ks.yaml
