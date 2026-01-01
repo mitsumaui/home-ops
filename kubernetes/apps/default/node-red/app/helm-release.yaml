@@ -50,7 +50,7 @@ spec:
           http:
             port: &port 1880
     persistence:
-      config:
+      data:
         existingClaim: *app
 
     route:
