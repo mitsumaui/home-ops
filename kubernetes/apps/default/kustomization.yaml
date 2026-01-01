@@ -18,3 +18,4 @@ resources:
   - ./sabnzbd/ks.yaml
   - ./prowlarr/ks.yaml
   - ./plex/ks.yaml
+  - ./mosquitto/ks.yaml
