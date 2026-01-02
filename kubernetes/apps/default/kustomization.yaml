@@ -2,21 +2,21 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./actual/ks.yaml
-  - ./cloudnative-pg/ks.yaml
-  - ./emqx/ks.yaml
+  # - ./actual/ks.yaml
+  # - ./cloudnative-pg/ks.yaml
+  # - ./emqx/ks.yaml
   # - ./esphome/ks.yaml
   # - ./hajimari/ks.yaml
-  - ./home-assistant/ks.yaml
+  # - ./home-assistant/ks.yaml
   # - ./jellyseerr/ks.yaml
   - ./minio/ks.yaml
   - ./nas-backups/ks.yaml
-  - ./node-red/ks.yaml
+  # - ./node-red/ks.yaml
   # - ./plex/ks.yaml
   # - ./prowlarr/ks.yaml
   # - ./radarr/ks.yaml
   # - ./sabnzbd/ks.yaml
   # - ./sonarr/ks.yaml
   # - ./tautulli/ks.yaml
-  - ./zigbee2mqtt/ks.yaml
+  # - ./zigbee2mqtt/ks.yaml
   - ./namespace.yaml
