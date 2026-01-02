@@ -4,5 +4,5 @@ kind: Kustomization
 namespace: default
 resources:
   - ./secret.sops.yaml
-  - ./psql-17.yaml
-  - ./bkp-psql-17.yaml
+  - ./psql-v17.yaml
+  - ./bkp-psql-v17.yaml
