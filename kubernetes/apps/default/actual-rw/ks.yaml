@@ -10,7 +10,7 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
-  path: ./kubernetes/apps/default/actual/app
+  path: ./kubernetes/apps/default/actual-rw/app
   postBuild:
     substitute:
       APP: *app

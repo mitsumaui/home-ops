@@ -23,9 +23,6 @@ spec:
               TZ: "Europe/London"
               ACTUAL_PORT: &port 5006
               TINI_SUBREAPER: 1
-            envFrom:
-              - secretRef:
-                  name: actual-rw-secret
             probes:
               liveness:
                 enabled: true
