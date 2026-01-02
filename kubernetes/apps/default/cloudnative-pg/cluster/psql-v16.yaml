@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: &currentCluster psql-v17-1
+  name: &currentCluster psql-v16-3
   namespace: default
 spec:
   # using only 1 replica: very difficult to drain the node where postgres is running

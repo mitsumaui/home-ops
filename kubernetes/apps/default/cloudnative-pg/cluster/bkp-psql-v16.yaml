@@ -3,10 +3,10 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: bkp-psql-v17-1
+  name: bkp-psql-v16-3
 spec:
   schedule: "@daily"
   immediate: true
   backupOwnerReference: self
   cluster:
-    name: psql-v17-1
+    name: psql-v16-3
