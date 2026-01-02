@@ -2,17 +2,17 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: &currentCluster psql-v16-3
+  name: &currentCluster psql-v17-1
   namespace: default
 spec:
   # using only 1 replica: very difficult to drain the node where postgres is running
   # using more than 1 replica: write amplification issues when leveraging replicated storage (e.g. ceph)
   instances: 2
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.0
+  imageName: ghcr.io/cloudnative-pg/postgresql:17
   primaryUpdateStrategy: unsupervised
   storage:
     size: 30Gi
-    storageClass: ceph-block
+    storageClass: openebs-hostpath
   enableSuperuserAccess: true
   superuserSecret:
     name: cloudnative-pg
@@ -20,16 +20,22 @@ spec:
     parameters:
       max_connections: "300"
       shared_buffers: 512MB
+  nodeMaintenanceWindow:
+    inProgress: false
+    reusePVC: true
   monitoring:
     enablePodMonitor: true
   resources:
     requests:
-      memory: "512Mi"
+      memory: 512Mi
     limits:
-      memory: "1Gi"
+      memory: 1Gi
+
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
+      data:
+        compression: bzip2
       wal:
         compression: bzip2
         maxParallel: 4
@@ -49,6 +55,8 @@ spec:
   externalClusters:
     - name: *previousCluster
       barmanObjectStore:
+        # data:
+        #   compression: bzip2
         wal:
           compression: bzip2
           maxParallel: 4
