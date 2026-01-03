@@ -24,3 +24,4 @@ resources:
   - ./home-assistant/ks.yaml
   - ./zigbee2mqtt/ks.yaml
   - ./actual-rw/ks.yaml
+  - ./garage/ks.yaml
