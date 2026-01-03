@@ -5,4 +5,5 @@ resources:
   - ./pvc.yaml
   - ./id-secret.sops.yaml
   - ./id-destination.yaml
+  - ./garage-source.yaml
   # - ./r2-source.yaml
