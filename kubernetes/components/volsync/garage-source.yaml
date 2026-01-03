@@ -21,7 +21,7 @@ spec:
       runAsGroup: ${VOLSYNC_PGID:=1000}
       fsGroup: ${VOLSYNC_PGID:=1000}
     pruneIntervalDays: 7
-    repository: "${APP}-volsync-secret-garage"
+    repository: "${APP}-volsync-garage-secret"
     retain:
       daily: 7
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
