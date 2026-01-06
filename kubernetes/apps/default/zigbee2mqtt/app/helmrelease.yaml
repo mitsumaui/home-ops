@@ -43,10 +43,6 @@ spec:
               ZIGBEE2MQTT_CONFIG_SERIAL_DISABLE_LED: "false"
               ZIGBEE2MQTT_CONFIG_SERIAL_PORT: tcp://10.0.30.200:6638
               ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: zstack
-              # DEBUG: "zigbee-herdsman*"
-            # envFrom:
-            #   - secretRef:
-            #       name: "{{ .Release.Name }}-secret"
             probes:
               liveness:
                 enabled: true
@@ -79,7 +75,6 @@ spec:
 #        pod:
 #          nodeSelector:
 #            zzh.feature.node.kubernetes.io/zigbee: "true"
->>>>>>> 69f8e63 (no node selector):kubernetes/apps/default/zigbee2mqtt/app/helm-release.yaml
     service:
       app:
         ports:
@@ -94,4 +89,10 @@ spec:
             namespace: network
     persistence:
       config:
-        existingClaim: "{{ .Release.Name }}"
+        existingClaim: zigbee2mqtt
+#      usb:
+#        type: hostPath
+#        hostPath: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+#        hostPathType: CharDevice
+#        globalMounts:
+#          - path: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
