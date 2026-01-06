@@ -3,7 +3,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: bkp-psql-v16-3
+  name: bkp-psql-v16-4
 spec:
   schedule: "0 0 * * *"
   backupOwnerReference: self

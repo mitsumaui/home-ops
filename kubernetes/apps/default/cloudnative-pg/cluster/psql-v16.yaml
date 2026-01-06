@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: &currentCluster psql-v16-3
+  name: &currentCluster psql-v16-4
   namespace: default
 spec:
   # using only 1 replica: very difficult to drain the node where postgres is running
@@ -40,13 +40,13 @@ spec:
         # when recovering from an existing cnpg cluster
         serverName: *currentCluster
 
-  # bootstrap:
-  #   recovery:
-  #     source: &previousCluster psql-v16-2
-  # externalClusters:
-  #   - name: *previousCluster
-  #     plugin:
-  #       name: barman-cloud.cloudnative-pg.io
-  #       parameters:
-  #         barmanObjectName: garage-store
-  #         serverName: *previousCluster
+  bootstrap:
+    recovery:
+      source: &previousCluster psql-v16-3
+  externalClusters:
+    - name: *previousCluster
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: garage-store
+          serverName: *previousCluster
