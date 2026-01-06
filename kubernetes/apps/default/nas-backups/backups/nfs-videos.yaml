@@ -12,7 +12,7 @@ spec:
   storageClassName: ""
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: 192.168.167.5
+    server: 10.0.30.2
     path: "/mnt/SG6TB2/Data/Home Videos"
   mountOptions:
     - nfsvers=3

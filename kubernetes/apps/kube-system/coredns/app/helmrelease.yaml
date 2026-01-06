@@ -3,39 +3,22 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: coredns
-  namespace: kube-system
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: coredns
-      version: 1.45.0
-      sourceRef:
-        kind: HelmRepository
-        name: coredns
-        namespace: flux-system
-  maxHistory: 2
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
+  chartRef:
+    kind: OCIRepository
+    name: coredns
+  interval: 1h
   values:
     fullnameOverride: coredns
-    replicaCount: 1
+    image:
+      repository: mirror.gcr.io/coredns/coredns
     k8sAppLabelOverride: kube-dns
-    service:
-      name: kube-dns
-      clusterIP: "${COREDNS_ADDR}"
     serviceAccount:
       create: true
-    deployment:
-      annotations:
-        reloader.stakater.com/auto: "true"
+    service:
+      name: kube-dns
+      clusterIP: "10.43.0.10"
+    replicaCount: 2
     servers:
       - zones:
           - zone: .
@@ -43,9 +26,6 @@ spec:
             use_tcp: true
         port: 53
         plugins:
-          - name: log
-            configBlock: |-
-              class error
           - name: errors
           - name: health
             configBlock: |-
@@ -54,18 +34,24 @@ spec:
           - name: kubernetes
             parameters: cluster.local in-addr.arpa ip6.arpa
             configBlock: |-
-              pods insecure
+              pods verified
               fallthrough in-addr.arpa ip6.arpa
-              ttl 30
-          - name: prometheus
-            parameters: 0.0.0.0:9153
+          - name: autopath
+            parameters: "@kubernetes"
           - name: forward
             parameters: . /etc/resolv.conf
           - name: cache
-            parameters: 30
+            configBlock: |-
+              prefetch 20
+              serve_stale
           - name: loop
           - name: reload
           - name: loadbalance
+          - name: prometheus
+            parameters: 0.0.0.0:9153
+          - name: log
+            configBlock: |-
+              class error
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:

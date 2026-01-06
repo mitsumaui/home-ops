@@ -1,22 +1,28 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: default
+
+components:
+  - ../../components/sops
+
 resources:
-  # - ./actual/ks.yaml
-  # - ./cloudnative-pg/ks.yaml
-  # - ./emqx/ks.yaml
-  # - ./esphome/ks.yaml
-  # - ./hajimari/ks.yaml
-  # - ./home-assistant/ks.yaml
-  # - ./jellyseerr/ks.yaml
-  - ./minio/ks.yaml
-  - ./nas-backups/ks.yaml
-  # - ./node-red/ks.yaml
-  # - ./plex/ks.yaml
-  # - ./prowlarr/ks.yaml
-  # - ./radarr/ks.yaml
-  # - ./sabnzbd/ks.yaml
-  # - ./sonarr/ks.yaml
-  # - ./tautulli/ks.yaml
-  # - ./zigbee2mqtt/ks.yaml
   - ./namespace.yaml
+  - ./echo/ks.yaml
+  - ./tautulli/ks.yaml
+  - ./actual/ks.yaml
+  - ./esphome/ks.yaml
+  - ./sonarr/ks.yaml
+  - ./radarr/ks.yaml
+  - ./jellyseerr/ks.yaml
+  - ./sabnzbd/ks.yaml
+  - ./prowlarr/ks.yaml
+  - ./plex/ks.yaml
+  - ./mosquitto/ks.yaml
+  - ./node-red/ks.yaml
+  - ./cloudnative-pg/ks.yaml
+  - ./home-assistant/ks.yaml
+  - ./zigbee2mqtt/ks.yaml
+  - ./actual-rw/ks.yaml
+  - ./garage/ks.yaml
+  - ./nas-backups/ks.yaml

@@ -1,0 +1,52 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: &currentCluster psql-v16-4
+  namespace: default
+spec:
+  # using only 1 replica: very difficult to drain the node where postgres is running
+  # using more than 1 replica: write amplification issues when leveraging replicated storage (e.g. ceph)
+  instances: 2
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.0
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 30Gi
+    storageClass: openebs-hostpath
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: cloudnative-pg
+  postgresql:
+    parameters:
+      max_connections: "300"
+      shared_buffers: 512MB
+  nodeMaintenanceWindow:
+    inProgress: false
+    reusePVC: true
+  monitoring:
+    enablePodMonitor: true
+  resources:
+    requests:
+      memory: 512Mi
+    limits:
+      memory: 1Gi
+
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: garage-store
+        # Note: serverName version needs to be incremented
+        # when recovering from an existing cnpg cluster
+        serverName: *currentCluster
+
+  bootstrap:
+    recovery:
+      source: &previousCluster psql-v16-3
+  externalClusters:
+    - name: *previousCluster
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: garage-store
+          serverName: *previousCluster

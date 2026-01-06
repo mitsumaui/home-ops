@@ -4,67 +4,76 @@ kind: HelmRelease
 metadata:
   name: &app esphome
 spec:
-  interval: 5m
-  chart:
-    spec:
-      chart: app-template
-      version: 3.7.3
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
-      interval: 30m
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-    - name: volsync
-      namespace: volsync
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: esphome
   values:
     controllers:
       esphome:
         containers:
           app:
             image:
-              repository: esphome/esphome
-              tag: 2025.11.4
-            env:
-              TZ: "Europe/London"
-              ESPHOME__INSTANCE_NAME: ESPHome
-              ESPHOME__PORT: &port 6052
-              ESPHOME__APPLICATION_URL: "esphome.${SECRET_DOMAIN}"
-              ESPHOME__LOG_LEVEL: info
-              ESPHOME_DASHBOARD_USE_PING: true
-
+              repository: ghcr.io/home-operations/esphome
+              tag: 2025.12.3@sha256:d000147ad5598dbcabe59be0426b0b52b095d7f51b5e2a97addf68072218581f
+            # env:
+            #   TZ: "Europe/London"
+            #   ESPHOME__INSTANCE_NAME: ESPHome
+            #   ESPHOME__PORT: &port 6052
+            #   ESPHOME__APPLICATION_URL: "esphome.${SECRET_DOMAIN}"
+            #   ESPHOME__LOG_LEVEL: info
+            #   ESPHOME_DASHBOARD_USE_PING: true
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 5m
+                memory: 512Mi
+              limits:
+                memory: 3072Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
     service:
       app:
         controller: *app
+        forceRename: "{{.Release.Name}}"
         ports:
           http:
-            port: *port
-
-    ingress:
-      app:
-        className: internal
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: simple-icons:esphome
-        hosts:
-          - host: "esphome.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-
+            port: &port 6052
     persistence:
       config:
         existingClaim: *app
+      buildcache:
+        suffix: buildcache
+        size: 50Gi
+        accessMode: ReadWriteOnce
+        advancedMounts:
+          esphome:
+            app:
+              - path: /cache
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          esphome:
+            app:
+              - path: /tmp
+                subPath: esphome-tmp
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port

@@ -5,68 +5,61 @@ metadata:
   name: &app node-red
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 3.7.3
-      interval: 30m
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-    - name: volsync
-      namespace: volsync
-
+  chartRef:
+    kind: OCIRepository
+    name: node-red
   values:
     controllers:
       node-red:
-        annotations:
-          reloader.stakater.com/auto: "true"
-
         containers:
           app:
             image:
-              repository: docker.io/nodered/node-red
-              tag: 4.1.1
+              repository: nodered/node-red
+              tag: 4.1.2-18-minimal@sha256:b2904082cebbf79b0f232cabf04c170741c34bec15c1d26ebe17f4e1f30492e9
             env:
-              TZ: "Europe/London"
+              TZ: Europe/London
 
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 568
-
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 5m
+                memory: 350Mi
+              limits:
+                memory: 2Gi
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              # runAsNonRoot: true
+              # fsGroup: 568
+              # fsGroupChangePolicy: OnRootMismatch
+              # allowPrivilegeEscalation: false
+              # readOnlyRootFilesystem: true
+              # capabilities:
+              #   drop:
+              #     - ALL
     service:
       app:
         controller: *app
         ports:
           http:
-            port: 1880
-
-    ingress:
-      main:
-        className: internal
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "cib:node-red"
-        hosts:
-          - host: &host nodered.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-
+            port: &port 1880
     persistence:
       data:
         existingClaim: *app
+
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port

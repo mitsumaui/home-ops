@@ -3,7 +3,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: cloudnative-pg
-  namespace: default
 spec:
   interval: 15m
   chart:
@@ -13,12 +12,11 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: cloudnative-pg
-        namespace: flux-system
   maxHistory: 3
   install:
     createNamespace: true
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
@@ -28,3 +26,8 @@ spec:
   values:
     crds:
       create: true
+    replicaCount: 2
+    monitoring:
+      podMonitorEnabled: true
+      grafanaDashboard:
+        create: true
