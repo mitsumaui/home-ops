@@ -3,7 +3,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: default
 resources:
-  - ./secret.sops.yaml
-  - ./psql-v16.yaml
-  - ./objectstore.yaml
-  - ./bkp-psql-v16.yaml
+  - ./ocirepository.yaml
+  - ./helm-release.yaml

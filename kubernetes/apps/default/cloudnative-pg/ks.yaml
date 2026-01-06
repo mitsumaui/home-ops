@@ -20,6 +20,11 @@ kind: Kustomization
 metadata:
   name: cloudnative-pg-clusters
 spec:
+  dependsOn:
+    - name: openebs
+      namespace: openebs
+    - name: barman-cloud-plugin
+      namespace: default
   path: ./kubernetes/apps/default/cloudnative-pg/cluster
   prune: true
   sourceRef:
