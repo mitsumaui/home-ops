@@ -23,7 +23,7 @@ spec:
       sync:
         kind: GitRepository
         url: "https://github.com/mitsumaui/home-ops.git"
-        ref: "refs/heads/main"
+        ref: "refs/heads/rebuild"
         path: kubernetes/flux/cluster
       commonMetadata:
         labels:
