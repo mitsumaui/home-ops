@@ -3,7 +3,7 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: "${APP}-garage"
+  name: "${APP}-idrive"
 spec:
   sourcePVC: "${APP}"
   trigger:
@@ -21,7 +21,7 @@ spec:
       runAsGroup: ${VOLSYNC_PGID:=1000}
       fsGroup: ${VOLSYNC_PGID:=1000}
     pruneIntervalDays: 7
-    repository: "${APP}-volsync-garage-secret"
+    repository: "${APP}-volsync-idrive-secret"
     retain:
       daily: 7
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
