@@ -2,3 +2,5 @@ kubernetes-k8s-gmk1.yaml
 kubernetes-k8s-gmk2.yaml
 kubernetes-k8s-hpe1.yaml
 talosconfig
+kubernetes-k8s-nuc1.yaml
+kubernetes-k8s-hpe2.yaml
