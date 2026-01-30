@@ -94,7 +94,7 @@ spec:
             subPath: repository.config
       repository:
         type: nfs
-        server: 192.168.167.5
+        server: 10.0.30.2
         path: /mnt/SG6TB/kopia
         globalMounts:
           - path: /repository
