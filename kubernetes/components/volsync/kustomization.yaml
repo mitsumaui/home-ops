@@ -9,5 +9,5 @@ resources:
   - ./garage-secret.sops.yaml
   - ./garage-source.yaml
   # - ./r2-source.yaml
-components:
-  - ./nas
+# components:
+#   - ./nas
