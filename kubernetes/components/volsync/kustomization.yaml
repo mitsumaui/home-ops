@@ -8,4 +8,5 @@ resources:
   - ./id-source.yaml
   - ./garage-secret.sops.yaml
   - ./garage-source.yaml
+  - ./nas
   # - ./r2-source.yaml
