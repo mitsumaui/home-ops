@@ -25,4 +25,5 @@ resources:
   - ./zigbee2mqtt/ks.yaml
   - ./actual-rw/ks.yaml
   - ./garage/ks.yaml
+  - ./byd-re/ks.yaml
   # - ./nas-backups/ks.yaml
