@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/mitsumaui/byd-re
-              tag: main-0318bcc
+              tag: main-5e9f041
             env:
               TZ: "Europe/London"
               PORT: &port 3000
