@@ -3,11 +3,11 @@ apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 resources:
   - ./pvc.yaml
-  - ./id-secret.sops.yaml
-  - ./id-destination.yaml
-  - ./id-source.yaml
-  - ./garage-secret.sops.yaml
-  - ./garage-source.yaml
+  # - ./id-secret.sops.yaml
+  # - ./id-destination.yaml
+  # - ./id-source.yaml
+  # - ./garage-secret.sops.yaml
+  # - ./garage-source.yaml
   # - ./r2-source.yaml
 components:
   - ./nas

@@ -95,7 +95,7 @@ spec:
       repository:
         type: nfs
         server: 10.0.30.2
-        path: /mnt/SG6TB/kopia
+        path: /mnt/ApeVault/kopia
         globalMounts:
           - path: /repository
       tmpfs:

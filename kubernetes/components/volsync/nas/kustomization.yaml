@@ -5,4 +5,4 @@ kind: Component
 resources:
   - ./secret.sops.yaml
   # - ./replicationdestination.yaml
-  # - ./replicationsource.yaml
+  - ./replicationsource.yaml
