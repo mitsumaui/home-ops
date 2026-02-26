@@ -67,12 +67,12 @@ spec:
       data:
         type: nfs
         server: "10.0.30.2"
-        path: "/mnt/SG6TB/s3/data"
+        path: "/mnt/ApeVault/garage/data"
         globalMounts:
           - path: /data
       meta:
         type: nfs
         server: "10.0.30.2"
-        path: "/mnt/SG6TB/s3/meta"
+        path: "/mnt/ApeVault/garage/meta"
         globalMounts:
           - path: /meta
