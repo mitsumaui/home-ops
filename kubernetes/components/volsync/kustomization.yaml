@@ -10,4 +10,4 @@ resources:
   # - ./garage-source.yaml
   # - ./r2-source.yaml
 components:
-  # - ./nas
+  - ./nas
