@@ -15,7 +15,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/esphome
-              tag: 2026.1.4@sha256:21557eecf87a6a505988f1b7550613c67110c1271adf5e97be6684b4864a61dc
+              tag: 2026.2.4@sha256:e1a0cd7bb5b1146da8bfd2a7680109733c564de561d56382b175f6d289753f94
             # env:
             #   TZ: "Europe/London"
             #   ESPHOME__INSTANCE_NAME: ESPHome
