@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/raefon/lidarr-nightly
-              tag: 3.1.2@sha256:1724ffeab9b692ef36e53f4ee8a68898e6ac954ea1bcf84710068f0d4ef8f947
+              tag: 3.1.3@sha256:af8774f902c374d84bd9da81b8b07deff45441dc982f1a25e7e60215e5d130e0
             env:
               LIDARR__APP__INSTANCENAME: Lidarr
               LIDARR__APP__THEME: dark
