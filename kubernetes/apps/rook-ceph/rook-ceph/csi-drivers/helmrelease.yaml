@@ -1,21 +1,31 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: rook-ceph-csi-drivers
+  name: ceph-csi-drivers
   namespace: rook-ceph
 spec:
   chartRef:
     kind: OCIRepository
-    name: rook-ceph-cluster
+    name: ceph-csi-drivers
   interval: 1h
   values:
-    operatorConfig:
-      driverSpecDefaults:
-        deployCsiAddons: true
     drivers:
+      cephfs:
+        enabled: false
       nfs:
-        enabled: true
-        name: rook-ceph.nfs.csi.ceph.com
+        enabled: false
       nvmeof:
         enabled: false
+      rbd:
+        enabled: true
+        name: rook-ceph.rbd.csi.ceph.com
+        clusterName: rook-ceph
+        fsGroupPolicy: File
+        snapshotPolicy: volumeSnapshot
+        controllerPlugin:
+          replicas: 2
+          priorityClassName: system-cluster-critical
+        nodePlugin:
+          priorityClassName: system-node-critical
