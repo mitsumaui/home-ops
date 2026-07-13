@@ -2,56 +2,20 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: ceph-csi-drivers
+  name: rook-ceph-csi-drivers
+  namespace: rook-ceph
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: ceph-csi-drivers
-      version: 1.0.3
-      sourceRef:
-        kind: HelmRepository
-        name: ceph-csi-operator
-        namespace: flux-system
-  maxHistory: 2
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
-  # Rook-compatible values (see rook/rook#17665). The driver names MUST match the
-  # provisioner names Rook uses in StorageClasses/VolumeSnapshotClasses. The chart
-  # creates the plugin ServiceAccounts + RBAC and sets serviceAccountName on the
-  # Driver CRs, which the rook-managed ceph-csi-operator reconciles into the
-  # ctrlplugin/nodeplugin Deployments.
+  chartRef:
+    kind: OCIRepository
+    name: rook-ceph-cluster
+  interval: 1h
   values:
     operatorConfig:
-      namespace: rook-ceph
       driverSpecDefaults:
-        imageSet:
-          name: rook-csi-operator-image-set-configmap
-        nodePlugin:
-          priorityClassName: system-node-critical
-        controllerPlugin:
-          priorityClassName: system-cluster-critical
+        deployCsiAddons: true
     drivers:
-      rbd:
-        enabled: true
-        name: rook-ceph.rbd.csi.ceph.com
-        # Chart default for rbd is "none", which drops the csi-snapshotter
-        # sidecar and breaks VolSync (all backups snapshot RBD volumes).
-        snapshotPolicy: volumeSnapshot
-      cephfs:
-        enabled: true
-        name: rook-ceph.cephfs.csi.ceph.com
-        snapshotPolicy: volumeSnapshot
       nfs:
-        enabled: false
+        enabled: true
         name: rook-ceph.nfs.csi.ceph.com
       nvmeof:
         enabled: false
-        name: rook-ceph.nvmeof.csi.ceph.com
