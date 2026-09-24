@@ -15,7 +15,7 @@ spec:
           app:
             image:
               repository: nodered/node-red
-              tag: 4.1.13-18-minimal@sha256:d543c7a527e9524265473b496b3868764b7650000909351098b3d537bfc5c1b3
+              tag: 4.1.15-18-minimal@sha256:077e4eb1665146fc85edd29a9fddba853125c660859a9289325df9a3f39fe8aa
             env:
               TZ: Europe/London
 
