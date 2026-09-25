@@ -138,6 +138,9 @@ spec:
           - name: "k8s-hpe1"
             devices:
               - name: "/dev/nvme0n1"
+          - name: "k8s-hpe2"
+            devices:
+              - name: "/dev/nvme0n1"
     cephBlockPools:
       - name: ceph-blockpool
         spec:
