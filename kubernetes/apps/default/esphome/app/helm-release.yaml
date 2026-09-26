@@ -59,14 +59,14 @@ spec:
     persistence:
       config:
         existingClaim: *app
-      # buildcache:
-      #   suffix: buildcache
-      #   size: 50Gi
-      #   accessMode: ReadWriteOnce
-      #   advancedMounts:
-      #     esphome:
-      #       app:
-      #         - path: /cache
+      buildcache:
+        suffix: buildcache
+        size: 50Gi
+        accessMode: ReadWriteOnce
+        advancedMounts:
+          esphome:
+            app:
+              - path: /cache
       tmpfs:
         type: emptyDir
         advancedMounts:
