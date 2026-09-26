@@ -85,9 +85,9 @@ spec:
             # cpu: 1
             # memory: 1600Mi
             memory: 8Gi
-        #   requests:
-        #     cpu: 500m
-        #     memory: 1600Mi
+          requests:
+            cpu: 500m
+            memory: 1024Mi
         # prepareosd:
         #   limits:
         #     cpu: 1000m
