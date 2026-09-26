@@ -70,16 +70,16 @@ spec:
         connections:
           requireMsgr2: true
       resources:
-        # mgr:
-        #   limits: &mgr-hw
-        #     cpu: 500m
-        #     memory: 700Mi
-        #   requests: *mgr-hw
-        # mon:
-        #   limits: &mon-hw
-        #     cpu: 500m
-        #     memory: 1024Mi
-        #   requests: *mon-hw
+        mgr:
+          limits: &mgr-hw
+            cpu: 500m
+            memory: 700Mi
+          requests: *mgr-hw
+        mon:
+          limits: &mon-hw
+            cpu: 500m
+            memory: 1024Mi
+          requests: *mon-hw
         osd:
           limits:
             # cpu: 1
