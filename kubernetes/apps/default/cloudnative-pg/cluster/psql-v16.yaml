@@ -31,22 +31,41 @@ spec:
     limits:
       memory: 1Gi
 
-  plugins:
-    - name: barman-cloud.cloudnative-pg.io
-      isWALArchiver: true
-      parameters:
-        barmanObjectName: garage-store
-        # Note: serverName version needs to be incremented
-        # when recovering from an existing cnpg cluster
-        serverName: *currentCluster
+  # plugins:
+  #   - name: barman-cloud.cloudnative-pg.io
+  #     isWALArchiver: true
+  #     parameters:
+  #       barmanObjectName: garage-store
+  #       # Note: serverName version needs to be incremented
+  #       # when recovering from an existing cnpg cluster
+  #       serverName: *currentCluster
 
-  bootstrap:
-    recovery:
-      source: &previousCluster psql-v16-3
-  externalClusters:
-    - name: *previousCluster
-      plugin:
-        name: barman-cloud.cloudnative-pg.io
-        parameters:
-          barmanObjectName: garage-store
-          serverName: *previousCluster
+  backup:
+    retentionPolicy: "30d"
+    barmanObjectStore:
+      destinationPath: s3://cloudnative-pg
+      serverName: *currentCluster
+      endpointURL: http://garage.default.svc.cluster.local:3900
+      wal:
+        compression: bzip2
+      s3Credentials:
+        region:
+          name: cloudnative-pg
+          key: GARAGE_S3_REGION
+        accessKeyId:
+          name: cloudnative-pg
+          key: GARAGE_ACCESS_KEY
+        secretAccessKey:
+          name: cloudnative-pg
+          key: GARAGE_SECRET_KEY
+
+  # bootstrap:
+  #   recovery:
+  #     source: &previousCluster psql-v16-3
+  # externalClusters:
+  #   - name: *previousCluster
+  #     plugin:
+  #       name: barman-cloud.cloudnative-pg.io
+  #       parameters:
+  #         barmanObjectName: garage-store
+  #         serverName: *previousCluster
