@@ -39,8 +39,8 @@ spec:
   dependsOn:
     - name: openebs
       namespace: openebs
-    - name: cloudnative-pg-barman-plugin
-      namespace: default
+    # - name: cloudnative-pg-barman-plugin
+    #   namespace: default
   path: ./kubernetes/apps/default/cloudnative-pg/cluster
   prune: true
   sourceRef:
