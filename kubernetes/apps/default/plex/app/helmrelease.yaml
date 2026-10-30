@@ -56,9 +56,9 @@ spec:
               limits:
                 memory: 5Gi
     defaultPodOptions:
-      resourceClaims:
-        - name: gpu
-          resourceClaimTemplateName: plex
+      # resourceClaims:
+      #   - name: gpu
+      #     resourceClaimTemplateName: plex
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
