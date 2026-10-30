@@ -24,23 +24,25 @@ spec:
               PLEX_ADVERTISE_URL: https://plex.${SECRET_DOMAIN}:443,http://10.0.30.35:32400,http://plex.default.svc.cluster.local:32400
               PLEX_NO_AUTH_NETWORKS: 192.168.167.0/24,10.0.10.0/24,10.0.11.0/24
             probes:
-              liveness: &probes
+              liveness:
+                enabled: true
+                spec:
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
                     path: /identity
                     port: &port 32400
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
+                  timeoutSeconds: 5
+                  failureThreshold: 5
               startup:
                 enabled: true
                 spec:
                   failureThreshold: 30
-                  periodSeconds: 10
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -77,18 +79,18 @@ spec:
         ports:
           http:
             port: *port
-    rawResources:
-      gpu:
-        apiVersion: resource.k8s.io/v1
-        kind: ResourceClaimTemplate
-        spec:
-          spec:
-            spec:
-              devices:
-                requests:
-                  - name: gpu
-                    exactly:
-                      deviceClassName: gpu.intel.com
+    # rawResources:
+    #   gpu:
+    #     apiVersion: resource.k8s.io/v1
+    #     kind: ResourceClaimTemplate
+    #     spec:
+    #       spec:
+    #         spec:
+    #           devices:
+    #             requests:
+    #               - name: gpu
+    #                 exactly:
+    #                   deviceClassName: gpu.intel.com
     route:
       app:
         hostnames:
