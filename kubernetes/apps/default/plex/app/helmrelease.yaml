@@ -47,9 +47,9 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: {drop: ["ALL"]}
-            resources:
-              claims:
-                - name: gpu
+            # resources:
+            #   claims:
+            #     - name: gpu
               requests:
                 cpu: 100m
                 memory: 1Gi
