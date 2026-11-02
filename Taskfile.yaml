@@ -32,3 +32,14 @@ tasks:
     preconditions:
       - test -f {{.KUBECONFIG}}
       - which flux
+
+  ghm:
+    desc: Merge one or more GitHub pull requests
+    cmd: |
+      if [ -z "{{.CLI_ARGS}}" ]; then
+        echo "Usage: task merge-prs -- <PR number> [<PR number>...]" >&2
+        exit 1
+      fi
+      for pr in {{.CLI_ARGS}}; do
+        gh pr merge "$pr" --merge || exit
+      done
